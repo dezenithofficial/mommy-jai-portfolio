@@ -512,3 +512,92 @@ body{width:100%;position:relative}
 @media(max-width:355px){
   .brand-more-links a{font-size:21px}
 }
+
+
+/* V3.0 — authentic campaign evidence, flagship editorial moment & differentiated services */
+.work-section{padding-bottom:clamp(75px,9vw,112px)}
+.campaign-spotlight{margin:3px 0 43px;border-top:1px solid rgba(130,99,89,.28);padding-top:18px}
+.spotlight-eyebrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px;color:#956b5e;font-size:11px;letter-spacing:1.55px;font-weight:700}
+.campaign-item{min-width:0;overflow:hidden;border-radius:13px;background:#fffaf6;border:1px solid rgba(139,103,90,.12);box-shadow:0 12px 32px rgba(65,44,38,.055);transition:box-shadow .3s ease,transform .3s ease}
+.campaign-item:hover{box-shadow:0 19px 40px rgba(65,44,38,.1)}
+.campaign-item>.work-card{border-radius:0;box-shadow:none;background:transparent}
+.campaign-item>.work-card:hover{transform:none;box-shadow:none}
+.campaign-item>.work-card:focus-visible{outline:3px solid #976e62;outline-offset:-3px}
+.campaign-item-featured>.work-card{display:grid;grid-template-columns:minmax(0,1.13fr) minmax(0,.87fr);min-height:365px;align-items:stretch}
+.campaign-item-featured>.work-card .work-art{height:100%;min-height:365px}
+.campaign-item-featured>.work-card .card-info{display:flex;align-items:end;justify-content:space-between;gap:13px;padding:40px 34px;background:linear-gradient(140deg,#fffaf7,#f0e0d8)}
+.campaign-item-featured .card-info h3{font-size:clamp(39px,4.7vw,64px);line-height:1.02;letter-spacing:-.035em;margin-top:16px}
+.campaign-item-featured .card-info p{font-size:15px;line-height:1.65}
+.campaign-item-featured .card-type{font-size:11px;line-height:1.6;letter-spacing:1px}
+.campaign-item-featured .work-art-photo .campaign-thumb{object-fit:cover;width:100%;height:100%;min-height:365px}
+.campaign-gallery-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:0 0 22px}
+.campaign-gallery-heading .kicker{margin:0 0 8px}
+.campaign-gallery-heading h3{font-family:var(--serif);font-size:clamp(32px,3.8vw,47px);font-weight:500;letter-spacing:-.025em;line-height:1.08;margin:0}
+.campaign-gallery-heading h3 em{font-weight:400;color:#a27769}
+.campaign-gallery-heading>p{font-size:13px;color:#71625d;max-width:330px;line-height:1.7;margin:0}
+.work-grid.work-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.work-gallery .work-art{height:245px}
+.work-gallery .card-info{padding:19px 18px 20px;min-height:120px}
+.work-gallery .card-info h3{font-size:27px;line-height:1.12}
+.work-gallery .card-type{font-size:10px;line-height:1.55;letter-spacing:.8px}
+.work-gallery .card-info p{font-size:13px;line-height:1.6}
+.campaign-details{border-top:1px solid rgba(129,100,88,.15);padding:0 19px}
+.campaign-details summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 0;color:#79564a;font-size:13px;font-weight:700;line-height:1.45;list-style:none;min-height:48px}
+.campaign-details summary::-webkit-details-marker{display:none}
+.campaign-details summary:focus-visible,.campaign-details .case-source:focus-visible{outline:2px solid #936a5b;outline-offset:3px}
+.campaign-details[open] summary{border-bottom:1px solid rgba(129,100,88,.13)}
+.details-chevron{font-size:20px;line-height:1;transition:transform .2s ease}
+.campaign-details[open] .details-chevron{transform:rotate(45deg)}
+.campaign-facts{display:grid;gap:12px;padding:17px 0 12px}
+.campaign-facts div{min-width:0}
+.campaign-facts dt{margin-bottom:3px;font-size:10px;font-weight:800;color:#926a5e;letter-spacing:1.1px;text-transform:uppercase;line-height:1.5}
+.campaign-facts dd{margin:0;font-size:13px;line-height:1.6;color:#51463f}
+.campaign-details .case-source{display:inline-flex;gap:9px;align-items:center;color:#79564a;text-decoration:underline;text-underline-offset:4px;font-size:13px;font-weight:700;line-height:1.6;margin:3px 0 20px}
+.campaign-spotlight .campaign-details{background:#f6ece5}
+.campaign-spotlight .campaign-facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.case-disclaimer{font-size:12px;line-height:1.7;color:#786b65;max-width:900px;margin:20px 0 0}
+.work-footnote{margin-top:11px}
+.service-overline{font-family:var(--sans);font-size:11px!important;font-weight:800;letter-spacing:1.15px;line-height:1.5!important;color:#91685b!important;margin:12px 0 0!important}
+.services-grid .service-card h3{margin-top:12px}
+.service-distinction{margin-top:auto!important;border-top:1px solid rgba(136,101,88,.19);padding-top:15px;font-size:13px!important;line-height:1.65!important;color:#51443e!important}
+.service-distinction strong{color:#795449}
+.services-grid .service-link{margin-top:22px}
+.service-sponsored .service-distinction{border-top-color:rgba(136,101,88,.27)}
+@media(max-width:950px){
+ .campaign-item-featured>.work-card{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .campaign-item-featured>.work-card .card-info{padding:28px 24px}
+ .work-grid.work-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .campaign-gallery-heading>p{max-width:260px}
+}
+@media(max-width:700px){
+ .campaign-spotlight{margin-bottom:33px}
+ .spotlight-eyebrow{font-size:9px;letter-spacing:1px}
+ .campaign-item-featured>.work-card{display:block;min-height:0}
+ .campaign-item-featured>.work-card .work-art{height:265px;min-height:0}
+ .campaign-item-featured .work-art-photo .campaign-thumb{min-height:0;height:100%;object-fit:contain}
+ .campaign-item-featured>.work-card .card-info{min-height:170px;padding:24px 20px}
+ .campaign-item-featured .card-info h3{font-size:clamp(36px,10vw,49px)}
+ .campaign-item-featured .card-info p{font-size:14px}
+ .campaign-gallery-heading{display:block;margin-bottom:19px}
+ .campaign-gallery-heading h3{font-size:clamp(33px,8.5vw,41px)}
+ .campaign-gallery-heading>p{max-width:440px;margin-top:13px}
+ .work-grid.work-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .work-gallery .work-art{height:185px;padding:12px}
+ .work-gallery .art-main{font-size:clamp(25px,6.7vw,34px)}
+ .work-gallery .card-info{min-height:140px;padding:14px 12px}
+ .work-gallery .card-info h3{font-size:clamp(21px,5.6vw,26px)}
+ .work-gallery .card-info p{font-size:12px}
+ .work-gallery .card-type{font-size:9px;letter-spacing:.35px}
+ .campaign-details{padding:0 12px}
+ .campaign-details summary{font-size:12px}
+ .campaign-facts dd{font-size:12px}
+ .campaign-spotlight .campaign-facts{grid-template-columns:1fr;gap:12px}
+ .case-disclaimer{font-size:12px}
+ .service-overline{font-size:11px!important}
+}
+@media(max-width:380px){
+ .work-grid.work-gallery{grid-template-columns:1fr}
+ .work-gallery .work-art{height:220px}
+ .work-gallery .card-info{min-height:0}
+}
+@media(prefers-reduced-motion:reduce){.campaign-item,.details-chevron{transition:none!important}}
