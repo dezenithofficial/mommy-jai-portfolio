@@ -228,3 +228,21 @@ body{width:100%;position:relative}
   }
   .ticker.ticker--js[data-motion="running"] .ticker-group[aria-hidden="true"]{display:inline-flex}
 }
+
+
+/* V1.3.6 — Functional inquiry form: polished accessibility, feedback and privacy */
+.form-honeypot{position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.inquiry-form .form-consent{display:flex;align-items:flex-start;gap:11px;margin:15px 0 3px;font-size:12px;font-weight:400;line-height:1.6;color:#615854;cursor:pointer}
+.inquiry-form .form-consent input[type="checkbox"]{flex:0 0 18px;width:18px;height:18px;min-width:18px;min-height:18px;margin:2px 0 0;padding:0;border:1px solid #9b776d;border-radius:3px;accent-color:#93695e;box-shadow:none;cursor:pointer}
+.inquiry-form .form-consent span{flex:1}
+.inquiry-form .form-consent a{color:#75483c;text-decoration:underline;text-underline-offset:2px;font-weight:700}
+.inquiry-form .form-consent a:hover{color:#502e24}
+.inquiry-form .submit-button:disabled{opacity:.66;cursor:progress;box-shadow:none;transform:none}
+.inquiry-form .form-note{margin-top:7px;font-size:12px;line-height:1.65}
+.inquiry-form .form-note[data-state="sending"]{color:#674f45}
+.inquiry-form .form-note[data-state="success"]{color:#35624b;font-weight:700}
+.inquiry-form .form-note[data-state="error"]{color:#913c3c;font-weight:700}
+@media(max-width:767px){
+ .inquiry-form input:not([type="checkbox"]),.inquiry-form select,.inquiry-form textarea{font-size:16px}
+ .inquiry-form .form-consent{font-size:12px}
+}
