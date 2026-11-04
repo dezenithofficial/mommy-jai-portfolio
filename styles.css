@@ -252,3 +252,27 @@ body{width:100%;position:relative}
 .inquiry-form .form-fallback{display:inline-flex;align-items:center;align-self:start;min-height:44px;padding:9px 13px;margin-top:5px;border:1px solid #a77b6c;border-radius:8px;background:#fff8f3;color:#764f41;font-family:var(--sans);font-size:13px;font-weight:700;line-height:1.5;text-decoration:none}
 .inquiry-form .form-fallback:hover{background:#f7e8de}
 .inquiry-form .form-fallback[hidden]{display:none!important}
+
+
+/* V1.4 — first-fold hero framing: keep conversion CTAs visible on laptops
+   while preserving the editorial typography and natural mobile scrolling. */
+@media(min-width:701px){
+  .hero{min-height:570px;padding-top:32px;padding-bottom:58px}
+  .hero h1{margin-top:25px;margin-bottom:21px}
+  .hero-meta{margin-top:34px}
+  /* Move the card outward from Jai's face, not farther across the portrait. */
+  .sticker-top{top:39px;right:-26px}
+}
+@media(min-width:1024px) and (max-height:790px){
+  .hero{min-height:0;padding-top:22px;padding-bottom:46px}
+  .hero h1{margin-top:22px;margin-bottom:18px}
+  .hero-visual{height:500px}
+}
+@media(max-width:700px){
+  .hero{padding-top:30px;padding-bottom:36px;gap:10px}
+  .hero h1{margin-top:17px;margin-bottom:15px}
+  .hero-actions{margin-top:20px}
+  .hero-meta{margin-top:23px}
+  .hero-visual{margin:0 auto}
+  .sticker-top{top:22px;right:-4px}
+}
