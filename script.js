@@ -53,4 +53,45 @@
     }, {threshold:0.08,rootMargin:'0px 0px 30px 0px'});
     items.forEach(el => observer.observe(el));
   }
+}
+  // Context-aware mobile conversion dock. Only appears when the hero CTA has
+  // scrolled out, and disappears near the contact form or while using inputs.
+  const dock = document.getElementById('mobile-cta');
+  const heroActions = document.querySelector('.hero-actions');
+  const contact = document.getElementById('contact');
+  const mobileViewport = window.matchMedia('(max-width: 767px)');
+  let formFocused = false;
+  const updateDock = () => {
+    if (!dock || !heroActions || !contact) return;
+    const heroBelowHeader = heroActions.getBoundingClientRect().bottom < 80;
+    const contactNotYetReached = contact.getBoundingClientRect().top > window.innerHeight * 0.78;
+    const menuOpen = menu?.getAttribute('aria-expanded') === 'true';
+    const vv = window.visualViewport;
+    const keyboardOpen = !!vv && vv.height < window.innerHeight * 0.72;
+    const show = mobileViewport.matches && heroBelowHeader &&
+      contactNotYetReached && !formFocused && !keyboardOpen && !menuOpen;
+    dock.classList.toggle('is-visible', show);
+    dock.setAttribute('aria-hidden', String(!show));
+    dock.inert = !show;
+  };
+  document.addEventListener('focusin', e => {
+    if (e.target.matches('input, textarea, select')) { formFocused = true; updateDock(); }
+  });
+  document.addEventListener('focusout', e => {
+    if (e.target.matches('input, textarea, select')) {
+      formFocused = false;
+      requestAnimationFrame(updateDock);
+    }
+  });
+  dock?.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
+    dock.classList.remove('is-visible');
+    dock.setAttribute('aria-hidden','true');
+    dock.inert=true;
+  }));
+  menu?.addEventListener('click', updateDock);
+  window.addEventListener('scroll', updateDock, {passive:true});
+  window.addEventListener('resize', updateDock);
+  window.visualViewport?.addEventListener('resize', updateDock);
+  mobileViewport.addEventListener?.('change', updateDock);
+  requestAnimationFrame(updateDock);
 })();
