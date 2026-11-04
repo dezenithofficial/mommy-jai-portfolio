@@ -611,3 +611,91 @@ body{width:100%;position:relative}
 @media(max-width:700px){
   .campaign-item-featured .work-art-photo .campaign-thumb{object-fit:contain}
 }
+
+
+/* V3.2 — a focused, non-duplicative list of additional published brand stories. */
+.brand-section.brand-section-simplified{
+  padding:clamp(68px,7.2vw,100px) 0;
+  background:linear-gradient(180deg,#eee2db 0%,#f3eae5 100%);
+}
+.brand-content-simplified{max-width:1100px}
+.brand-section-simplified .brand-content>.kicker{margin-bottom:18px}
+.brand-section-simplified .brand-content>h2{
+  max-width:740px;
+  margin:0 auto;
+  font-size:clamp(43px,5.5vw,72px);
+  line-height:1.05;
+  letter-spacing:-.038em;
+}
+.brand-section-simplified .brand-content .brand-introduction{
+  max-width:565px!important;
+  margin:20px auto 37px!important;
+  font-size:clamp(14px,1.5vw,16px)!important;
+  line-height:1.75!important;
+  color:#675a54;
+}
+.brand-story-links{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+.brand-story-links li{min-width:0;margin:0}
+.brand-story-links a{
+  min-height:79px;
+  padding:17px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  color:#41342f;
+  background:rgba(250,247,243,.57);
+  border:1px solid rgba(130,98,85,.16);
+  border-radius:8px;
+  font-family:var(--serif);
+  font-size:clamp(21px,2.2vw,29px);
+  font-weight:600;
+  line-height:1.14;
+  letter-spacing:-.02em;
+  text-decoration:none;
+  transition:background .22s ease,border-color .22s ease,transform .22s ease;
+}
+.brand-story-links a:hover{
+  background:#fffaf6;
+  border-color:rgba(151,109,94,.36);
+  transform:translateY(-2px);
+}
+.brand-story-links a:focus-visible{outline:2px solid #91695e;outline-offset:3px}
+.brand-story-links .brand-story-arrow{
+  flex:0 0 auto;
+  font-family:var(--sans);
+  font-size:15px;
+  font-weight:600;
+  color:#a67b6c;
+}
+.brand-section-simplified .brand-content .brand-legal{
+  max-width:720px!important;
+  margin:25px auto 0!important;
+  font-size:12px!important;
+  line-height:1.75!important;
+  color:#76655d!important;
+}
+@media(max-width:950px){
+  .brand-story-links{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .brand-section.brand-section-simplified{padding:65px 0 69px}
+  .brand-section-simplified .brand-content>h2{font-size:clamp(39px,10vw,53px)}
+  .brand-section-simplified .brand-content .brand-introduction{margin:16px auto 27px!important}
+  .brand-story-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .brand-story-links a{min-height:66px;padding:14px 12px;font-size:clamp(19px,5.3vw,24px)}
+  .brand-story-links .brand-story-arrow{font-size:13px}
+  .brand-section-simplified .brand-content .brand-legal{margin-top:21px!important}
+}
+@media(max-width:355px){
+  .brand-story-links{grid-template-columns:1fr}
+  .brand-story-links a{min-height:58px}
+}
+@media(prefers-reduced-motion:reduce){.brand-story-links a{transition:none}}
