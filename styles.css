@@ -168,3 +168,28 @@ h2{font-size:clamp(46px,4.3vw,61px);line-height:1.05}
 
 /* Force typography glyphs instead of platform-colored emoji on iOS. */
 .small-star,.art-ornament,.big-star,.card-arrow,.service-icon,.service-link span,.mobile-cta a span,.ticker-inner span{font-variant-emoji:text}
+
+
+/* V1.3.2 — seamless specialties marquee and mobile horizontal-overflow containment */
+html,body{max-width:100%;overflow-x:clip}
+body{width:100%;position:relative}
+.ticker{display:block;position:relative;overflow:hidden;max-width:100vw;padding:19px 0;text-align:left;isolation:isolate}
+.ticker-inner{animation:none!important}
+.ticker-track{display:flex;flex-wrap:nowrap;width:max-content;min-width:200%;animation:tickerTravel 32s linear infinite;will-change:transform}
+.ticker-group{display:flex;flex:0 0 auto;align-items:center;justify-content:space-around;gap:clamp(22px,4vw,52px);padding-inline:clamp(20px,3vw,48px);min-width:50vw;white-space:nowrap;font-family:var(--sans);font-size:11px;letter-spacing:1.8px;font-weight:700;color:#765c53;line-height:1.4}
+.ticker-group span{flex:none}
+.ticker-group i{font-size:13px;flex:none;font-style:normal;color:#a7786a;font-variant-emoji:text}
+@keyframes tickerTravel{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:767px){
+  .ticker{padding:17px 0}
+  .ticker-track{animation-duration:26s;min-width:0}
+  .ticker-group{font-size:10px;letter-spacing:1.35px;gap:27px;padding-inline:13.5px;justify-content:flex-start;min-width:100vw}
+  .ticker-group i{font-size:12px}
+  .hero,.hero-visual,.section,.work-grid,.contact-panel{min-width:0}
+  .hero-visual{max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .ticker-track{animation:none!important;transform:none!important;width:100%;min-width:0}
+  .ticker-group{flex-wrap:wrap;justify-content:center;min-width:0;width:100%;white-space:normal;gap:8px 16px}
+  .ticker-group[aria-hidden="true"]{display:none}
+}
