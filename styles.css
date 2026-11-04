@@ -212,3 +212,37 @@ body{width:100%;position:relative}
   }
   .ticker-group[aria-hidden="true"]{display:none}
 }
+
+
+/* V1.3.4 — explicit iOS-safe marquee engine with accessible motion control */
+.ticker.ticker--js .ticker-track{animation:none!important;width:max-content;min-width:0}
+.ticker-motion-toggle[hidden]{display:none!important}
+.ticker-motion-toggle{
+  position:absolute;z-index:4;right:clamp(12px,2vw,22px);top:50%;
+  transform:translateY(-50%);
+  min-width:55px;min-height:42px;padding:8px 12px;border:1px solid rgba(131,94,80,.23);
+  border-radius:999px;background:rgba(252,248,244,.95);color:#75584f;
+  box-shadow:0 4px 15px rgba(80,58,49,.12);font-family:var(--sans);
+  font-size:12px;font-weight:700;letter-spacing:.01em;cursor:pointer;
+  -webkit-appearance:none;appearance:none;
+}
+.ticker-motion-toggle:hover{background:#fffaf6}
+.ticker-motion-toggle:focus-visible{outline:3px solid #8d705f;outline-offset:3px}
+.ticker[data-motion="paused"] .ticker-track{will-change:auto}
+@media(max-width:767px){
+  .ticker-motion-toggle{right:10px;min-height:44px;min-width:52px;padding:7px 10px}
+}
+@media(prefers-reduced-motion:reduce){
+  /* Explicit Play opt-in may animate via JS even when CSS animations are disabled. */
+  .ticker.ticker--js[data-motion="running"] .ticker-track{
+    display:flex;width:max-content;min-width:0;transform:translate3d(0,0,0);
+  }
+  .ticker.ticker--js[data-motion="running"] .ticker-group:first-child{
+    display:inline-flex;flex-wrap:nowrap;justify-content:flex-start;
+    gap:clamp(20px,3.5vw,42px);width:max-content;min-width:0;
+    padding-inline:clamp(12px,2vw,25px);white-space:nowrap;text-align:left;
+  }
+  .ticker.ticker--js[data-motion="running"] .ticker-group[aria-hidden="true"]{
+    display:inline-flex;
+  }
+}
