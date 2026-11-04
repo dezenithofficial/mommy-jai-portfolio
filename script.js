@@ -53,7 +53,7 @@
     }, {threshold:0.08,rootMargin:'0px 0px 30px 0px'});
     items.forEach(el => observer.observe(el));
   }
-}
+
   // Context-aware mobile conversion dock. Only appears when the hero CTA has
   // scrolled out, and disappears near the contact form or while using inputs.
   const dock = document.getElementById('mobile-cta');
