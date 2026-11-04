@@ -246,3 +246,9 @@ body{width:100%;position:relative}
  .inquiry-form input:not([type="checkbox"]),.inquiry-form select,.inquiry-form textarea{font-size:16px}
  .inquiry-form .form-consent{font-size:12px}
 }
+
+
+/* V1.3.7 — preserve filled details with a graceful mailto fallback */
+.inquiry-form .form-fallback{display:inline-flex;align-items:center;align-self:start;min-height:44px;padding:9px 13px;margin-top:5px;border:1px solid #a77b6c;border-radius:8px;background:#fff8f3;color:#764f41;font-family:var(--sans);font-size:13px;font-weight:700;line-height:1.5;text-decoration:none}
+.inquiry-form .form-fallback:hover{background:#f7e8de}
+.inquiry-form .form-fallback[hidden]{display:none!important}
