@@ -85,12 +85,24 @@
       } finally {
         clearTimeout(timer);
       }
-      if (!response.ok) throw new Error('Your inquiry was not accepted by the form service.');
+      if (!response.ok) {
+        let details = '';
+        try {
+          const data = await response.json();
+          details = Array.isArray(data?.errors)
+            ? data.errors.map(item => String(item.message || '')).filter(Boolean).slice(0, 2).join(' ')
+            : '';
+        } catch (_) { /* Use the generic error message if the provider returned no JSON. */ }
+        throw new Error(details || 'Your inquiry was not accepted by the form service.');
+      }
       form.reset();
       setStatus('Thank you! Your inquiry was submitted successfully. Mommy Jai will review your details and reply by email.', 'success');
-    } catch (_) {
+    } catch (error) {
       makeEmailDraft();
-      setStatus('Online delivery could not be confirmed. Your details are still here. Use the email option below to send them instead.', 'error');
+      const providerError = error instanceof Error && !/abort|network|failed to fetch/i.test(error.message)
+        ? error.message + ' '
+        : '';
+      setStatus(providerError + 'Online delivery could not be confirmed. Your details are still here. Use the email option below to send them instead.', 'error');
     } finally {
       submitButton.disabled = false;
       submitButton.removeAttribute('aria-busy');
