@@ -3,12 +3,8 @@
   const ticker = document.querySelector(".ticker");
   const track = ticker?.querySelector(".ticker-track");
   const first = ticker?.querySelector(".ticker-group");
-  const toggle = ticker?.querySelector(".ticker-motion-toggle");
-  if (!ticker || !track || !first || !toggle) return;
+  if (!ticker || !track || !first) return;
 
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  let playing = !reduceMotion.matches;
-  let manuallyChosen = false;
   let visible = true;
   let groupWidth = 0;
   let offset = 0;
@@ -23,68 +19,34 @@
       offset %= groupWidth;
     }
   };
-
   const stop = () => {
     if (frameId) cancelAnimationFrame(frameId);
     frameId = 0;
     lastTime = 0;
   };
-
-  const canRun = () => playing && visible && !document.hidden && groupWidth > 0;
+  const canRun = () => visible && !document.hidden && groupWidth > 0;
   const tick = (now) => {
     frameId = 0;
     if (!canRun()) return;
     if (lastTime) {
-      const dt = Math.min(70, Math.max(0, now - lastTime));
-      offset = (offset + dt * SPEED_PX_PER_SECOND / 1000) % groupWidth;
+      const elapsed = Math.min(70, Math.max(0, now - lastTime));
+      offset = (offset + elapsed * SPEED_PX_PER_SECOND / 1000) % groupWidth;
     }
     lastTime = now;
-    track.style.transform = "translate3d(" + (-offset).toFixed(2) + "px,0,0)";
+    // Inline important overrides legacy reduced-motion CSS that otherwise freezes iOS.
+    track.style.setProperty("transform", "translate3d(" + (-offset).toFixed(2) + "px,0,0)", "important");
     frameId = requestAnimationFrame(tick);
   };
   const start = () => {
+    measure();
     if (!frameId && canRun()) {
       lastTime = 0;
       frameId = requestAnimationFrame(tick);
     }
   };
 
-  const synchronize = () => {
-    stop();
-    ticker.dataset.motion = playing ? "running" : "paused";
-    toggle.textContent = playing ? "Pause" : "Play";
-    toggle.setAttribute("aria-label", playing ? "Pause moving content specialties" : "Play moving content specialties");
-    toggle.setAttribute("title", playing ? "Pause moving text" : "Play moving text");
-    if (!playing) {
-      offset = 0;
-      track.style.transform = "translate3d(0,0,0)";
-    }
-    requestAnimationFrame(() => {
-      measure();
-      start();
-    });
-  };
-
   ticker.classList.add("ticker--js");
-  toggle.hidden = false;
-  toggle.addEventListener("click", () => {
-    manuallyChosen = true;
-    playing = !playing;
-    synchronize();
-  });
-
-  const onPreferenceChange = (event) => {
-    if (!manuallyChosen) {
-      playing = !event.matches;
-      synchronize();
-    }
-  };
-  if (reduceMotion.addEventListener) {
-    reduceMotion.addEventListener("change", onPreferenceChange);
-  } else if (reduceMotion.addListener) {
-    reduceMotion.addListener(onPreferenceChange);
-  }
-
+  ticker.dataset.motion = "running";
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(entries => {
       visible = entries[0]?.isIntersecting ?? true;
@@ -97,12 +59,11 @@
     if (document.hidden) stop();
     else start();
   });
-  window.addEventListener("resize", () => { measure(); start(); }, { passive: true });
-  window.addEventListener("pageshow", () => { measure(); start(); });
+  window.addEventListener("resize", start, { passive:true });
+  window.addEventListener("pageshow", start);
   if ("ResizeObserver" in window) {
-    const resizeObserver = new ResizeObserver(() => { measure(); start(); });
-    resizeObserver.observe(first);
+    new ResizeObserver(start).observe(first);
   }
-  if (document.fonts?.ready) document.fonts.ready.then(() => { measure(); start(); });
-  synchronize();
+  document.fonts?.ready?.then(start);
+  start();
 })();
