@@ -305,3 +305,10 @@ body{width:100%;position:relative}
 @media(max-width:700px){
   .sticker-top{top:16px;right:-9px}
 }
+
+
+/* V1.5 — palette-matched portrait, edited into the actual photo.
+   Keep authentic skin/hair tones by removing earlier whole-image CSS filters. */
+.portrait-frame{background:linear-gradient(180deg,#f0e5df 0%,#eadbd4 50%,#dac4b8 100%)}
+.portrait-img{filter:none;object-position:center 22%}
+.portrait-frame::after{content:none;display:none}
