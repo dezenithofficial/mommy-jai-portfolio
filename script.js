@@ -19,6 +19,30 @@
   const status = document.getElementById('form-status');
   const submitButton = form?.querySelector('.submit-button');
   const originalButtonMarkup = submitButton?.innerHTML;
+  const fallbackLink = document.getElementById('inquiry-email-fallback');
+  const createFallbackLink = () => {
+    if (!fallbackLink || !form) return;
+    const fields = new FormData(form);
+    const brand = String(fields.get('brand') || '').trim();
+    const subject = `Collaboration inquiry — ${brand || 'Website visitor'}`;
+    const body = [
+      'Hi Mommy Jai,',
+      '',
+      'I tried sending an inquiry through your website form.',
+      '',
+      `Contact name: ${String(fields.get('contact_name') || '').trim()}`,
+      `Brand / business: ${brand}`,
+      `Contact email: ${String(fields.get('email') || '').trim()}`,
+      `Collaboration type: ${String(fields.get('type') || '').trim()}`,
+      '',
+      'Campaign details:',
+      String(fields.get('message') || '').trim(),
+      '',
+      'Thank you!'
+    ].join('\n');
+    fallbackLink.href = `mailto:mommyjaiferrer@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    fallbackLink.hidden = false;
+  };
 
   form?.addEventListener('submit', async event => {
     event.preventDefault();
@@ -32,6 +56,7 @@
       status.dataset.state = type;
     };
 
+    if (fallbackLink) fallbackLink.hidden = true;
     submitButton.disabled = true;
     submitButton.setAttribute('aria-busy', 'true');
     submitButton.textContent = 'Sending inquiry…';
@@ -62,7 +87,8 @@
       form.reset();
       setStatus('Inquiry submitted! Your details have been accepted for email delivery to Mommy Jai. Thank you for reaching out.', 'success');
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Submission failed. Please email mommyjaiferrer@gmail.com directly.', 'error');
+      setStatus(error instanceof Error ? error.message : 'Online submission is temporarily unavailable. Use the prefilled email option below.', 'error');
+      createFallbackLink();
     } finally {
       submitButton.disabled = false;
       submitButton.removeAttribute('aria-busy');
