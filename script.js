@@ -17,19 +17,57 @@
   document.getElementById('year').textContent = String(new Date().getFullYear());
   const form = document.getElementById('inquiry-form');
   const status = document.getElementById('form-status');
-  form?.addEventListener('submit', e => {
-    e.preventDefault();
-    if (!form.reportValidity()) return;
-    const fields = new FormData(form);
-    const brand = String(fields.get('brand') || '').trim();
-    const email = String(fields.get('email') || '').trim();
-    const type = String(fields.get('type') || '').trim();
-    const message = String(fields.get('message') || '').trim();
-    const subject = `Collaboration inquiry — ${brand}`;
-    const body = `Hi Mommy Jai,\n\nI'd love to explore a collaboration.\n\nBrand / business: ${brand}\nContact email: ${email}\nCollaboration type: ${type}\n\nCampaign details:\n${message}\n\nThank you!`;
-    const mailto = `mailto:mommyjaiferrer@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    status.textContent = 'Your email app should open with the prepared message. Please send it there to complete the inquiry. If nothing opens, email mommyjaiferrer@gmail.com directly.';
-    window.location.href = mailto;
+  const submitButton = form?.querySelector('.submit-button');
+  const originalButtonMarkup = submitButton?.innerHTML;
+
+  form?.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!form.reportValidity() || submitButton?.disabled) return;
+
+    const payload = Object.fromEntries(new FormData(form));
+    if (String(payload._honey || '').trim()) return;
+    const setStatus = (message, type) => {
+      if (!status) return;
+      status.textContent = message;
+      status.dataset.state = type;
+    };
+
+    submitButton.disabled = true;
+    submitButton.setAttribute('aria-busy', 'true');
+    submitButton.textContent = 'Sending inquiry…';
+    setStatus('Submitting your inquiry securely…', 'sending');
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/mommyjaiferrer@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      let result = null;
+      try { result = await response.json(); } catch (_) { /* invalid provider response */ }
+
+      // Some providers encode boolean outcomes as strings. Never treat "false" as truthy.
+      const accepted = response.ok && (result?.success === true || result?.success === 'true');
+      if (!accepted) {
+        const message = String(result?.message || '');
+        if (/activat/i.test(message)) {
+          throw new Error('This form needs one-time email activation. Please email Mommy Jai directly until activation is complete.');
+        }
+        throw new Error('The inquiry could not be delivered. Please email Mommy Jai directly at mommyjaiferrer@gmail.com.');
+      }
+
+      form.reset();
+      setStatus('Inquiry submitted! Your details have been accepted for email delivery to Mommy Jai. Thank you for reaching out.', 'success');
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Submission failed. Please email mommyjaiferrer@gmail.com directly.', 'error');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.removeAttribute('aria-busy');
+      submitButton.innerHTML = originalButtonMarkup;
+    }
   });
 
   // Motion effects enhance rather than gate the content; respect reduced motion.
