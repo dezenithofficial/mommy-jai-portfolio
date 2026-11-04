@@ -442,3 +442,73 @@ body{width:100%;position:relative}
   .pending-brand-names span{font-size:19px}
 }
 @media(max-width:355px){.brand-linked{grid-template-columns:1fr}.brand-more-links{grid-template-columns:1fr}}
+
+
+/* V2.1: phase-two editorial refinements — readable proof, controlled rhythm */
+.creator-value{
+  margin-top:42px;
+  padding-top:36px;
+  padding-bottom:12px;
+  gap:42px;
+  grid-template-columns:minmax(0,.86fr) minmax(0,2.14fr);
+}
+.creator-value .kicker{margin-bottom:12px}
+.creator-value h3{font-size:clamp(31px,3.15vw,42px);line-height:1.11}
+.creator-value-points{gap:20px;align-items:start}
+.creator-value-points>div{padding-left:18px;border-left-color:rgba(130,99,89,.28)}
+.creator-value-points strong{font-size:13px;line-height:1.48}
+.creator-value-points span{font-size:13px;line-height:1.75;margin-top:9px;color:#615751}
+.brand-content .brand-subhead .brand-group-label,
+.brand-evidence-card .relationship-type,
+.brand-in-production .relationship-type{
+  font-size:12px;
+  letter-spacing:1.05px;
+  line-height:1.5;
+}
+.brand-content .brand-subhead .brand-group-label{margin-bottom:12px}
+.brand-subhead>a{font-size:13px;line-height:1.5}
+.brand-subhead>p{font-size:13px;line-height:1.75}
+.brand-evidence-card>p:not(.relationship-type){font-size:14px;line-height:1.75}
+.brand-evidence-paid>a{font-size:13px;line-height:1.55}
+.brand-evidence-exchange .exchange-intro{font-size:14px;line-height:1.7}
+.brand-linked{gap:10px}
+.brand-linked a{min-height:49px;padding:11px 13px;font-size:22px;line-height:1.3}
+.brand-more-links{row-gap:10px;column-gap:19px}
+.brand-more-links a{min-height:59px;padding:14px 8px;font-size:clamp(21px,2vw,25px);line-height:1.3}
+.brand-linked a span,.brand-more-links a span{font-size:13px;flex-shrink:0}
+.brand-in-production>div>p:not(.relationship-type){font-size:13px}
+.brand-featured{padding-bottom:13px}
+.brand-subhead{margin-bottom:26px}
+.brand-additional{
+  border-top:1px solid rgba(130,98,85,.24);
+  margin-top:51px;
+  margin-bottom:40px;
+  padding-top:39px;
+}
+.brand-in-production{
+  margin-top:8px;
+  padding:24px;
+  border-color:rgba(130,98,85,.21);
+}
+@media(max-width:950px){
+  .creator-value{grid-template-columns:1fr;gap:24px}
+  .creator-value-points{gap:18px}
+  .brand-more-links{column-gap:14px}
+}
+@media(max-width:700px){
+  .creator-value{margin-top:32px;padding-top:28px;padding-bottom:3px;gap:23px}
+  .creator-value h3{font-size:clamp(31px,8.3vw,39px)}
+  .creator-value-points{gap:19px}
+  .creator-value-points>div{padding-left:15px}
+  .creator-value-points strong{font-size:13px}
+  .creator-value-points span{font-size:13px;line-height:1.7}
+  .brand-subhead{gap:14px;margin-bottom:22px}
+  .brand-subhead h3{font-size:clamp(32px,8.7vw,36px)}
+  .brand-linked a{font-size:20px;min-height:48px;padding:10px 11px}
+  .brand-more-links a{font-size:21px;min-height:54px;padding:12px 6px}
+  .brand-additional{margin-top:39px;margin-bottom:32px;padding-top:32px}
+  .brand-in-production{padding:21px}
+}
+@media(max-width:355px){
+  .brand-more-links a{font-size:21px}
+}
