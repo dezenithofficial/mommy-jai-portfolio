@@ -31,4 +31,26 @@
     status.textContent = 'Your email app should open with the prepared message. Please send it there to complete the inquiry. If nothing opens, email mommyjaiferrer@gmail.com directly.';
     window.location.href = mailto;
   });
+
+  // Motion effects enhance rather than gate the content; respect reduced motion.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const bar = document.querySelector('.scroll-progress span');
+  const header = document.querySelector('.site-header');
+  const track = () => {
+    const distance = document.documentElement.scrollHeight - innerHeight;
+    if (bar) bar.style.width = (distance > 0 ? Math.min(100,scrollY / distance * 100) : 0) + '%';
+    header?.classList.toggle('is-scrolled', scrollY > 10);
+  };
+  track();
+  addEventListener('scroll', track, {passive:true});
+  addEventListener('resize', track);
+  if (!reduced && 'IntersectionObserver' in window) {
+    const items = [...document.querySelectorAll('.hero-copy > *, .section-heading > *, .work-card, .service-card, .about-art, .about-copy > *, .brand-content > *, .contact-heading > *, .inquiry-form > *')];
+    document.body.classList.add('js-motion');
+    items.forEach((el,i) => { el.classList.add('reveal-item'); el.style.transitionDelay = (i%4)*90+'ms'; });
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+    }, {threshold:0.08,rootMargin:'0px 0px 30px 0px'});
+    items.forEach(el => observer.observe(el));
+  }
 })();
