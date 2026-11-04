@@ -366,3 +366,79 @@ body{width:100%;position:relative}
   width:100%;height:100%;object-fit:contain;object-position:center center;
   filter:none;
 }
+
+
+/* V2.0: commercial credibility, evidence hierarchy and supporting text refinements */
+.work-section{padding-bottom:calc(var(--section-pad, 90px) * .86)}
+.work-footnote{font-size:12px;line-height:1.75}
+.card-type{font-size:11px;letter-spacing:1px}
+.creator-value{margin:37px 0 0;padding:28px 0 0;border-top:1px solid rgba(130,99,89,.18);display:grid;grid-template-columns:.92fr 2.08fr;gap:36px}
+.creator-value .kicker{margin:0 0 10px}
+.creator-value h3{font-family:var(--serif);font-weight:500;letter-spacing:-.03em;font-size:clamp(29px,3vw,39px);line-height:1.06;margin:0}
+.creator-value h3 em{color:#a5796a;font-weight:400}
+.creator-value-points{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.creator-value-points>div{padding:0 0 0 16px;border-left:1px solid rgba(130,99,89,.2)}
+.creator-value-points strong{display:block;font-size:12px;line-height:1.4;color:#493a34}
+.creator-value-points span{display:block;font-size:12px;line-height:1.65;color:#6b615d;margin-top:7px}
+
+.brand-section{background:linear-gradient(180deg,#eee2db 0%,#f3eae5 100%);padding:84px 0}
+.brand-content{text-align:left}
+.brand-content>.kicker,.brand-content>h2,.brand-introduction{text-align:center}
+.brand-content>h2{max-width:720px}
+.brand-content .brand-introduction{max-width:650px!important;margin:0 auto 46px!important;font-size:15px!important;line-height:1.75!important}
+.brand-subhead{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:0 0 21px}
+.brand-content .brand-subhead .brand-group-label{margin:0 0 10px;font-size:11px;letter-spacing:1.4px}
+.brand-subhead h3{margin:0;font-family:var(--serif);font-size:clamp(30px,3.4vw,43px);font-weight:500;line-height:1.05;letter-spacing:-.025em}
+.brand-subhead h3 em{color:#9d7468;font-weight:400}
+.brand-subhead>a{font-size:12px;font-weight:700;color:#775448;text-decoration:none;border-bottom:1px solid #a97f70;padding-bottom:6px;white-space:nowrap}
+.brand-subhead>p{max-width:320px;margin:0;font-size:12px;line-height:1.7;color:#695c56;text-align:right}
+.brand-evidence-grid{display:grid;grid-template-columns:.94fr 1.06fr;gap:15px}
+.brand-evidence-card{min-width:0;border:1px solid rgba(130,98,85,.15);border-radius:10px;padding:28px;min-height:266px}
+.brand-evidence-paid{background:linear-gradient(140deg,#faf7f3,#f2e5de);display:flex;flex-direction:column;align-items:flex-start}
+.brand-evidence-exchange{background:rgba(255,255,255,.38)}
+.relationship-type{color:#8d6256;font-size:11px;font-weight:700;letter-spacing:1.2px;line-height:1.35;margin:0}
+.brand-evidence-paid h4{margin:24px 0 10px;font-family:var(--serif);font-size:clamp(31px,3.3vw,44px);font-weight:600;line-height:1.08;letter-spacing:-.025em}
+.brand-evidence-card>p:not(.relationship-type){font-size:13px;color:#635851;line-height:1.7}
+.brand-evidence-paid>a{margin-top:auto;padding-top:24px;font-weight:700;font-size:12px;color:#745345;text-decoration:underline;text-underline-offset:5px}
+.brand-evidence-exchange .exchange-intro{margin:10px 0 18px;font-size:13px}
+.brand-linked{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.brand-linked a{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:43px;background:rgba(250,247,243,.85);padding:9px 11px;border-radius:5px;border:1px solid rgba(130,98,85,.13);text-decoration:none;color:#45362f;font-family:var(--serif);font-size:21px;font-weight:600}
+.brand-linked a span,.brand-more-links a span{font-family:var(--sans);font-size:12px;color:#a47869}
+.brand-linked a:hover,.brand-more-links a:hover{background:#fffaf6}
+.brand-additional{border-top:1px solid rgba(130,98,85,.18);margin:44px 0 35px;padding-top:32px}
+.brand-more-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 15px}
+.brand-more-links a{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:55px;padding:12px 7px;border-bottom:1px solid rgba(130,98,85,.19);font-family:var(--serif);font-size:clamp(19px,2vw,24px);font-weight:600;color:#4a3b34;text-decoration:none}
+.brand-in-production{display:grid;grid-template-columns:1fr 1.6fr;align-items:center;gap:20px;padding:22px;border:1px solid rgba(130,98,85,.16);background:rgba(250,247,243,.45);border-radius:9px}
+.brand-in-production>div>p:not(.relationship-type){font-size:12px;line-height:1.6;color:#6a5d56;margin:7px 0 0}
+.pending-brand-names{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.pending-brand-names span{padding:7px 11px;border-radius:30px;border:1px solid rgba(130,98,85,.15);background:rgba(255,255,255,.65);font-family:var(--serif);font-size:20px;color:#695950}
+.brand-content .brand-legal{max-width:790px!important;text-align:center;font-size:12px!important;line-height:1.7!important;margin:24px auto 0!important;color:#70645e!important}
+.brand-section a:focus-visible{outline:2px solid #91695e;outline-offset:3px}
+@media(max-width:950px){
+  .creator-value{grid-template-columns:1fr;gap:20px}
+  .brand-evidence-card{padding:22px}
+  .brand-more-links{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .work-section{padding-bottom:65px}
+  .creator-value{margin-top:28px;padding-top:23px}
+  .creator-value-points{grid-template-columns:1fr;gap:16px}
+  .creator-value-points>div{padding-left:13px}
+  .brand-section{padding:61px 0}
+  .brand-content .brand-introduction{font-size:14px!important;margin-bottom:36px!important}
+  .brand-subhead{align-items:flex-start;flex-direction:column;gap:12px}
+  .brand-subhead h3{font-size:36px}
+  .brand-subhead>p{text-align:left}
+  .brand-evidence-grid{grid-template-columns:1fr}
+  .brand-evidence-card{min-height:0;padding:22px}
+  .brand-evidence-paid h4{font-size:36px;margin-top:20px}
+  .brand-evidence-paid>a{padding-top:16px}
+  .brand-linked a{font-size:19px}
+  .brand-additional{margin:35px 0 28px;padding-top:26px}
+  .brand-more-links{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .brand-more-links a{min-height:49px;font-size:20px}
+  .brand-in-production{grid-template-columns:1fr;gap:16px}
+  .pending-brand-names{justify-content:flex-start}
+  .pending-brand-names span{font-size:19px}
+}
+@media(max-width:355px){.brand-linked{grid-template-columns:1fr}.brand-more-links{grid-template-columns:1fr}}
