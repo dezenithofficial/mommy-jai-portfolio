@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=1.3.5">
-  <script src="script.js?v=1.3.4" defer></script>
+  <script src="script.js?v=1.3.6" defer></script>
   <script src="ticker.js?v=1.3.5" defer></script>
 </head>
 <body>
@@ -119,7 +119,35 @@
       </div>
     </section>
 
-    <section class="section contact-section container" id="contact" aria-labelledby="contact-title"><div class="contact-panel"><div class="contact-heading"><p class="kicker">05 / LET'S CONNECT</p><h2 id="contact-title">Have something in mind?<br><em>I'd love to hear about it.</em></h2><p>Launching a product, planning a campaign, or looking for relatable content? Tell me a little about your brand and what you have in mind.</p><a class="contact-email" href="mailto:mommyjaiferrer@gmail.com">mommyjaiferrer@gmail.com <span aria-hidden="true">↗︎</span></a></div><form class="inquiry-form" id="inquiry-form"><label for="brand-name">Brand / business name <span aria-hidden="true">*</span></label><input id="brand-name" name="brand" autocomplete="organization" required maxlength="120" placeholder="Your brand name"><label for="contact-email">Your email <span aria-hidden="true">*</span></label><input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="200" placeholder="you@brand.com"><label for="inquiry-type">What are you interested in?</label><select id="inquiry-type" name="type"><option>UGC content creation</option><option>Sponsored content</option><option>Affiliate partnership</option><option>Gifting / product-exchange proposal</option><option>Something else</option></select><label for="inquiry-message">A little about your campaign <span aria-hidden="true">*</span></label><textarea id="inquiry-message" name="message" rows="3" maxlength="2000" required placeholder="Your product, campaign idea, preferred deliverables and timeline..."></textarea><button class="button button-primary submit-button" type="submit">Start a collaboration inquiry <span aria-hidden="true">↗︎</span></button><p class="form-note" id="form-status" role="status">This opens your email app with a prepared message. No information is stored on this website.</p></form></div></section>
+    <section class="section contact-section container" id="contact" aria-labelledby="contact-title"><div class="contact-panel"><div class="contact-heading"><p class="kicker">05 / LET'S CONNECT</p><h2 id="contact-title">Have something in mind?<br><em>I'd love to hear about it.</em></h2><p>Launching a product, planning a campaign, or looking for relatable content? Tell me a little about your brand and what you have in mind.</p><a class="contact-email" href="mailto:mommyjaiferrer@gmail.com">mommyjaiferrer@gmail.com <span aria-hidden="true">↗︎</span></a></div><form class="inquiry-form" id="inquiry-form" action="https://formsubmit.co/mommyjaiferrer@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New collaboration inquiry | Mommy Jai Ferrer">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_url" value="https://mommy-jai-portfolio.pages.dev/">
+          <div class="form-honeypot" aria-hidden="true"><label for="inquiry-website">Leave this field blank</label><input id="inquiry-website" name="_honey" tabindex="-1" autocomplete="off"></div>
+          <label for="contact-name">Your name <span aria-hidden="true">*</span></label>
+          <input id="contact-name" name="contact_name" autocomplete="name" required maxlength="100" placeholder="Your full name">
+          <label for="brand-name">Brand / business name <span aria-hidden="true">*</span></label>
+          <input id="brand-name" name="brand" autocomplete="organization" required maxlength="120" placeholder="Your brand name">
+          <label for="contact-email">Your email <span aria-hidden="true">*</span></label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="200" placeholder="you@brand.com">
+          <label for="inquiry-type">Collaboration type</label>
+          <select id="inquiry-type" name="type">
+            <option>UGC content creation</option>
+            <option>Sponsored content</option>
+            <option>Affiliate partnership</option>
+            <option>Gifting / product-exchange proposal</option>
+            <option>Something else</option>
+          </select>
+          <label for="inquiry-message">Tell me about your campaign <span aria-hidden="true">*</span></label>
+          <textarea id="inquiry-message" name="message" rows="4" maxlength="2000" required placeholder="Your product, campaign idea, preferred deliverables and timeline..."></textarea>
+          <label class="form-consent" for="inquiry-consent">
+            <input id="inquiry-consent" name="consent" type="checkbox" value="I agree" required>
+            <span>I agree to my information being used to respond to this inquiry, as described in the <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Notice</a>.</span>
+          </label>
+          <button class="button button-primary submit-button" type="submit">Send collaboration inquiry <span aria-hidden="true">↗︎</span></button>
+          <p class="form-note" id="form-status" role="status" aria-live="polite">Your inquiry is sent securely to Mommy Jai via a third-party form processor. No email app is required.</p>
+        </form></div></section>
   </main>
   <aside class="mobile-cta" id="mobile-cta" aria-label="Quick portfolio actions" aria-hidden="true" inert>
     <a class="mobile-cta-primary" href="#contact"><span aria-hidden="true">✉︎</span> Let's Collaborate <span aria-hidden="true">↗︎</span></a>
