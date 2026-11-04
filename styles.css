@@ -276,3 +276,32 @@ body{width:100%;position:relative}
   .hero-visual{margin:0 auto}
   .sticker-top{top:22px;right:-4px}
 }
+
+
+/* V1.4.1 — softly harmonize the portrait with the editorial warm palette */
+.portrait-frame{
+  background:linear-gradient(180deg,#d9cec8 0%,#cbbcb4 100%);
+}
+.portrait-img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 22%;
+  filter:brightness(1.01) saturate(.97) contrast(1.01) sepia(.045) hue-rotate(-5deg);
+}
+.portrait-frame::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(223,201,190,.09),rgba(202,176,164,.10));
+  mix-blend-mode:soft-light;
+}
+@media(min-width:701px){
+  .sticker-top{top:28px;right:-36px}
+}
+@media(max-width:700px){
+  .sticker-top{top:16px;right:-9px}
+}
