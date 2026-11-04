@@ -20,89 +20,77 @@
   const submitButton = form?.querySelector('.submit-button');
   const originalButtonMarkup = submitButton?.innerHTML;
   const fallbackLink = document.getElementById('inquiry-email-fallback');
-  const createFallbackLink = () => {
-    if (!fallbackLink || !form) return;
+  // Set the form's data-formspree-endpoint to its verified Formspree URL.
+  const endpoint = (form?.dataset.formspreeEndpoint || '').trim();
+  const endpointReady = /^https:\/\/formspree\.io\/f\/[A-Za-z0-9]+$/.test(endpoint);
+  const setStatus = (message, state) => {
+    if (!status) return;
+    status.textContent = message;
+    status.dataset.state = state;
+  };
+  const makeEmailDraft = () => {
+    if (!form) return '';
     const fields = new FormData(form);
     const brand = String(fields.get('brand') || '').trim();
-    const subject = `Collaboration inquiry — ${brand || 'Website visitor'}`;
+    const subject = 'Collaboration inquiry — ' + (brand || 'Website visitor');
     const body = [
       'Hi Mommy Jai,',
       '',
-      'I tried sending an inquiry through your website form.',
+      "I'd love to explore a collaboration.",
       '',
-      `Contact name: ${String(fields.get('contact_name') || '').trim()}`,
-      `Brand / business: ${brand}`,
-      `Contact email: ${String(fields.get('email') || '').trim()}`,
-      `Collaboration type: ${String(fields.get('type') || '').trim()}`,
+      'Contact name: ' + String(fields.get('contact_name') || '').trim(),
+      'Brand / business: ' + brand,
+      'Contact email: ' + String(fields.get('email') || '').trim(),
+      'Collaboration type: ' + String(fields.get('type') || '').trim(),
       '',
       'Campaign details:',
       String(fields.get('message') || '').trim(),
       '',
       'Thank you!'
     ].join('\n');
-    fallbackLink.href = `mailto:mommyjaiferrer@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    fallbackLink.hidden = false;
+    const url = 'mailto:mommyjaiferrer@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    if (fallbackLink) {
+      fallbackLink.href = url;
+      fallbackLink.hidden = false;
+    }
+    return url;
   };
-
   form?.addEventListener('submit', async event => {
     event.preventDefault();
     if (!form.reportValidity() || submitButton?.disabled) return;
-
-    const payload = Object.fromEntries(new FormData(form));
-    if (String(payload._honey || '').trim()) return;
-    const setStatus = (message, type) => {
-      if (!status) return;
-      status.textContent = message;
-      status.dataset.state = type;
-    };
-
+    const fields = new FormData(form);
+    if (String(fields.get('_gotcha') || '').trim()) return;
     if (fallbackLink) fallbackLink.hidden = true;
+    if (!endpointReady) {
+      const emailLink = makeEmailDraft();
+      setStatus('An email draft has been prepared with your details. Please press Send in your email app; the inquiry has not been submitted yet.', 'sending');
+      if (emailLink) window.location.href = emailLink;
+      return;
+    }
     submitButton.disabled = true;
     submitButton.setAttribute('aria-busy', 'true');
     submitButton.textContent = 'Sending inquiry…';
-    setStatus('Submitting your inquiry securely…', 'sending');
-
+    setStatus('Sending your inquiry securely…', 'sending');
     try {
       const controller = new AbortController();
-      const abortAfter = setTimeout(() => controller.abort(), 10000);
+      const timer = setTimeout(() => controller.abort(), 12000);
       let response;
       try {
-        response = await fetch('https://formsubmit.co/ajax/mommyjaiferrer@gmail.com', {
+        response = await fetch(endpoint, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(payload),
+          headers: { 'Accept': 'application/json' },
+          body: fields,
           signal: controller.signal
         });
       } finally {
-        clearTimeout(abortAfter);
+        clearTimeout(timer);
       }
-      let result = null;
-      try { result = await response.json(); } catch (_) { /* invalid provider response */ }
-
-      // Some providers encode boolean outcomes as strings. Never treat "false" as truthy.
-      const accepted = response.ok && (result?.success === true || result?.success === 'true');
-      if (!accepted) {
-        const message = String(result?.message || '');
-        if (/activat/i.test(message)) {
-          throw new Error('This form needs one-time email activation. Please email Mommy Jai directly until activation is complete.');
-        }
-        throw new Error('The inquiry could not be delivered. Please email Mommy Jai directly at mommyjaiferrer@gmail.com.');
-      }
-
+      if (!response.ok) throw new Error('Your inquiry was not accepted by the form service.');
       form.reset();
-      setStatus('Inquiry submitted! Your details have been accepted for email delivery to Mommy Jai. Thank you for reaching out.', 'success');
-    } catch (error) {
-      const activationNeeded = error instanceof Error && /activat/i.test(error.message);
-      setStatus(
-        activationNeeded
-          ? 'The email delivery service has not been activated yet. Please use the prefilled email option below.'
-          : 'The online form service is temporarily unavailable. Your details are still here; use the prefilled email option below.',
-        'error'
-      );
-      createFallbackLink();
+      setStatus('Thank you! Your inquiry was submitted successfully. Mommy Jai will review your details and reply by email.', 'success');
+    } catch (_) {
+      makeEmailDraft();
+      setStatus('Online delivery could not be confirmed. Your details are still here. Use the email option below to send them instead.', 'error');
     } finally {
       submitButton.disabled = false;
       submitButton.removeAttribute('aria-busy');
