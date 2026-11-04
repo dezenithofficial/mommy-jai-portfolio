@@ -63,14 +63,22 @@
     setStatus('Submitting your inquiry securely…', 'sending');
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/mommyjaiferrer@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
+      const controller = new AbortController();
+      const abortAfter = setTimeout(() => controller.abort(), 10000);
+      let response;
+      try {
+        response = await fetch('https://formsubmit.co/ajax/mommyjaiferrer@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+      } finally {
+        clearTimeout(abortAfter);
+      }
       let result = null;
       try { result = await response.json(); } catch (_) { /* invalid provider response */ }
 
@@ -87,7 +95,13 @@
       form.reset();
       setStatus('Inquiry submitted! Your details have been accepted for email delivery to Mommy Jai. Thank you for reaching out.', 'success');
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Online submission is temporarily unavailable. Use the prefilled email option below.', 'error');
+      const activationNeeded = error instanceof Error && /activat/i.test(error.message);
+      setStatus(
+        activationNeeded
+          ? 'The email delivery service has not been activated yet. Please use the prefilled email option below.'
+          : 'The online form service is temporarily unavailable. Your details are still here; use the prefilled email option below.',
+        'error'
+      );
       createFallbackLink();
     } finally {
       submitButton.disabled = false;
