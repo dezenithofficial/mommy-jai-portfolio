@@ -11,7 +11,7 @@ A lightweight, responsive editorial portfolio for **Mommy Jai Ferrer**, a Philip
 - Editorial hero portrait, family portrait, and six photographic featured campaigns
 - Dedicated Bonakid flagship presentation and published-campaign evidence
 - Featured Work video/carousel modal and expandable campaign details
-- Eight additional published Brand Stories with in-page TikTok drawer and direct-post fallback
+- Nine additional published Brand Stories with in-page TikTok drawer and direct-post fallback
 - Responsive mobile navigation, continuously scrolling specialties ticker, and bottom quick-contact dock
 - Reduced-motion support, keyboard close/escape behavior, and no horizontal scrolling in tested viewports
 - Formspree collaboration inquiry form with explicit consent, accessible status messaging, spam honeypot, and email fallback
