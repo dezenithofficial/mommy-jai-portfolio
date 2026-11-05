@@ -699,3 +699,58 @@ body{width:100%;position:relative}
   .brand-story-links a{min-height:58px}
 }
 @media(prefers-reduced-motion:reduce){.brand-story-links a{transition:none}}
+
+
+/* V3.3 — Lab On Hair: clean genuine-to-edit hair portfolio image, warm editorial framing. */
+.work-gallery .work-art.hair-photo{
+  display:block;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:0;
+  background:#eadbd4;
+}
+.work-gallery .work-art.hair-photo::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:-20px;
+  background:url("assets/lab-on-hair-featured.webp?v=1") center / cover no-repeat;
+  filter:blur(20px) saturate(.75);
+  opacity:.56;
+  pointer-events:none;
+}
+.work-gallery .work-art.hair-photo .hair-photo-img{
+  position:relative;
+  z-index:1;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  filter:none;
+}
+.work-gallery .hair-photo .hair-tag{
+  top:12px;
+  left:12px;
+  padding:7px 9px;
+  font-size:9px;
+  letter-spacing:1.05px;
+}
+.work-gallery .hair-photo .hair-count{
+  right:12px;
+  bottom:11px;
+}
+@media(max-width:700px){
+  .work-gallery .hair-photo .hair-tag{
+    top:8px;
+    left:8px;
+    padding:5px 6px;
+    font-size:8px;
+    letter-spacing:.65px;
+  }
+  .work-gallery .hair-photo .hair-count{
+    right:8px;
+    bottom:8px;
+  }
+}
