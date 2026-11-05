@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4.0.1">
-  <script src="script.js?v=1.5.1" defer></script>
+  <link rel="stylesheet" href="styles.css?v=4.1.0">
+  <script src="script.js?v=1.6.0" defer></script>
   <script src="ticker.js?v=1.3.5" defer></script>
 </head>
 <body>
@@ -181,10 +181,17 @@
           <h2 id="brand-drawer-title">Brand story</h2>
           <p id="brand-drawer-caption">A creator-published everyday product story on TikTok.</p>
         </div>
-        <div class="brand-drawer-embed">
-          <iframe id="brand-drawer-frame" title="Published TikTok video" loading="lazy" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="brand-drawer-embed" id="brand-drawer-media">
+          <iframe id="brand-drawer-frame" title="Published TikTok video" loading="eager" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <div class="brand-drawer-player-state" id="brand-drawer-player-state" role="status" aria-live="polite" aria-atomic="true">
+            <div class="brand-drawer-state-icon" aria-hidden="true">▶</div>
+            <p class="brand-drawer-state-title" id="brand-drawer-state-title">Loading video preview</p>
+            <p class="brand-drawer-state-copy" id="brand-drawer-state-copy">Connecting to TikTok’s player.</p>
+            <a class="brand-drawer-watch" id="brand-drawer-watch" href="#" target="_blank" rel="noopener noreferrer">Watch on TikTok <span aria-hidden="true">↗︎</span></a>
+            <button class="brand-drawer-retry" id="brand-drawer-retry" type="button" hidden>Try in-page preview again</button>
+          </div>
         </div>
-        <p class="brand-drawer-note">TikTok hosts this preview. Playback availability may vary by browser or region. <a id="brand-drawer-fallback" href="#" target="_blank" rel="noopener noreferrer">Open on TikTok ↗︎</a></p>
+        <p class="brand-drawer-note">TikTok controls whether a post can play inside another website. If it cannot, <a id="brand-drawer-fallback" href="#" target="_blank" rel="noopener noreferrer">watch the original on TikTok ↗︎</a>.</p>
         <a id="brand-drawer-original" class="brand-drawer-original" href="#" target="_blank" rel="noopener noreferrer">View original published post <span aria-hidden="true">↗︎</span></a>
       </div>
       <nav class="brand-drawer-navigation" aria-label="Browse more brand stories">
