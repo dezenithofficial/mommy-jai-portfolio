@@ -172,7 +172,7 @@
   window.visualViewport?.addEventListener('resize', updateDock);
   mobileViewport.addEventListener?.('change', updateDock);
   requestAnimationFrame(updateDock);
-}
+
   // In-page featured campaign viewer (V1.4). Loads official embeds only after click.
   const viewer = document.getElementById('campaign-viewer');
   const projects = [...document.querySelectorAll('.campaign-item[data-embed-kind]')];
