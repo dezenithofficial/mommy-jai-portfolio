@@ -113,15 +113,15 @@
   // Attribution is added only to a visitor-submitted inquiry.
   // No cookies, cross-site identifiers, or background event requests.
   const campaignTag = value => String(value || '')
-    .trim().replace(/[^a-zA-Z0-9 ._\\/-]/g,'').slice(0,80);
+    .trim().replace(/[^a-zA-Z0-9 ._-]/g,'').slice(0,80);
   const campaignParams = new URLSearchParams(window.location.search);
   let referringPlatform = 'direct / untagged';
   try {
     const hostname = new URL(document.referrer).hostname.toLowerCase();
-    if (/(^|\\.)tiktok\\.com$/.test(hostname)) referringPlatform = 'tiktok';
-    else if (/(^|\\.)instagram\\.com$/.test(hostname)) referringPlatform = 'instagram';
-    else if (/(^|\\.)facebook\\.com$/.test(hostname) || /(^|\\.)fb\\.com$/.test(hostname)) referringPlatform = 'facebook';
-    else if (/(^|\\.)google\\./.test(hostname)) referringPlatform = 'google';
+    if (/(^|\.)tiktok\.com$/.test(hostname)) referringPlatform = 'tiktok';
+    else if (/(^|\.)instagram\.com$/.test(hostname)) referringPlatform = 'instagram';
+    else if (/(^|\.)facebook\.com$/.test(hostname) || /(^|\.)fb\.com$/.test(hostname)) referringPlatform = 'facebook';
+    else if (/(^|\.)google\./.test(hostname)) referringPlatform = 'google';
     else if (hostname && hostname !== window.location.hostname) referringPlatform = 'other website';
   } catch (_) { /* Direct visits have no referring URL. */ }
   const sourceField = document.getElementById('portfolio-source');
