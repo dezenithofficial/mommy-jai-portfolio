@@ -1396,3 +1396,18 @@ body.brand-drawer-open{overflow:hidden}
 @media (max-width:355px) {
   .brand-drawer-embed{height:auto;min-height:0;max-height:none}
 }
+
+
+/* V4.4 — nine published Brand Stories, balanced on desktop and mobile */
+.brand-story-links{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(min-width:356px) and (max-width:700px){
+  .brand-story-links{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .brand-story-links li:last-child:nth-child(odd){
+    grid-column:1/-1;
+    width:calc((100% - 9px)/2);
+    justify-self:center;
+  }
+}
+@media(max-width:355px){
+  .brand-story-links{grid-template-columns:1fr}
+}
