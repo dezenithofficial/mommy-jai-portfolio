@@ -1258,3 +1258,58 @@ body.brand-drawer-open{overflow:hidden}
   .brand-drawer-panel,.brand-drawer::backdrop{animation:none!important}
   .brand-story-links a[aria-haspopup="dialog"] .brand-story-arrow{transition:none!important}
 }
+
+
+/* V3.8 — UniLove lifestyle campaign photo, preserving product presentation and palette */
+.work-gallery .work-art.unilove-photo{
+  display:block;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:0;
+  background:#eadbd4;
+}
+.work-gallery .work-art.unilove-photo::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:-20px;
+  background:url("assets/unilove-featured-v38.webp?v=1") center/cover no-repeat;
+  filter:blur(20px) saturate(.7);
+  opacity:.51;
+  pointer-events:none;
+}
+.work-gallery .work-art.unilove-photo .unilove-photo-img{
+  position:relative;
+  z-index:1;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  filter:none;
+}
+.work-gallery .unilove-photo .unilove-tag{
+  top:12px;
+  left:12px;
+  padding:7px 9px;
+  font-size:9px;
+  letter-spacing:1.05px;
+}
+.work-gallery .unilove-photo .unilove-count{
+  right:12px;
+  bottom:11px;
+}
+@media(max-width:700px){
+  .work-gallery .unilove-photo .unilove-tag{
+    top:8px;
+    left:8px;
+    padding:5px 6px;
+    font-size:8px;
+    letter-spacing:.65px;
+  }
+  .work-gallery .unilove-photo .unilove-count{
+    right:8px;
+    bottom:8px;
+  }
+}
