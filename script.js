@@ -172,4 +172,90 @@
   window.visualViewport?.addEventListener('resize', updateDock);
   mobileViewport.addEventListener?.('change', updateDock);
   requestAnimationFrame(updateDock);
+}
+  // In-page featured campaign viewer (V1.4). Loads official embeds only after click.
+  const viewer = document.getElementById('campaign-viewer');
+  const projects = [...document.querySelectorAll('.campaign-item[data-embed-kind]')];
+  if (viewer && typeof viewer.showModal === 'function' && projects.length) {
+    const frame = document.getElementById('viewer-frame');
+    const title = document.getElementById('viewer-title');
+    const caption = document.getElementById('viewer-caption');
+    const category = document.getElementById('viewer-category');
+    const facts = document.getElementById('viewer-facts');
+    const original = document.getElementById('viewer-original');
+    const fallback = document.getElementById('viewer-fallback');
+    const close = document.getElementById('viewer-close');
+    const previous = document.getElementById('viewer-prev');
+    const next = document.getElementById('viewer-next');
+    const count = document.getElementById('viewer-count');
+    let active = -1;
+    let origin = null;
+
+    const getEmbed = project => {
+      const kind = project.dataset.embedKind;
+      const ref = project.dataset.embedRef || '';
+      if (kind === 'tiktok' && /^[0-9]{15,22}$/.test(ref)) {
+        return 'https://www.tiktok.com/player/v1/' + ref + '?controls=1&autoplay=0&description=0&music_info=0&rel=0';
+      }
+      if ((kind === 'facebook-video' || kind === 'facebook-post') && ref.startsWith('https://www.facebook.com/')) {
+        const route = kind === 'facebook-video' ? 'video.php' : 'post.php';
+        const url = new URL('https://www.facebook.com/plugins/' + route);
+        url.searchParams.set('href', ref);
+        url.searchParams.set('width', '500');
+        url.searchParams.set('show_text', kind === 'facebook-post' ? 'true' : 'false');
+        return url.toString();
+      }
+      return '';
+    };
+
+    const display = index => {
+      if (index < 0 || index >= projects.length) return;
+      active = index;
+      const project = projects[index];
+      const link = project.querySelector('.work-card');
+      const cardTitle = project.querySelector('.card-info h3')?.textContent?.trim() || 'Campaign';
+      title.textContent = cardTitle;
+      caption.textContent = project.querySelector('.card-info p')?.textContent?.trim() || '';
+      category.textContent = project.querySelector('.card-type')?.textContent?.trim() || 'Creator work';
+      original.href = link.href;
+      fallback.href = link.href;
+      count.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(projects.length).padStart(2, '0');
+      previous.disabled = index === 0;
+      next.disabled = index === projects.length - 1;
+      facts.replaceChildren();
+      project.querySelectorAll('.campaign-facts > div').forEach(node => facts.appendChild(node.cloneNode(true)));
+      frame.src = 'about:blank'; // Stop sound from the previous campaign.
+      frame.title = 'Embedded ' + cardTitle + ' on ' + (project.dataset.embedKind === 'tiktok' ? 'TikTok' : 'Facebook');
+      const src = getEmbed(project);
+      if (src) frame.src = src;
+    };
+
+    projects.forEach((project,index) => {
+      [project.querySelector('.work-card'),project.querySelector('.case-source')].forEach(link => {
+        link?.addEventListener('click', event => {
+          if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          origin = link;
+          display(index);
+          if (!viewer.open) viewer.showModal();
+          document.body.classList.add('viewer-open');
+          close.focus({preventScroll:true});
+        });
+      });
+    });
+    close.addEventListener('click', () => viewer.close());
+    previous.addEventListener('click', () => display(active - 1));
+    next.addEventListener('click', () => display(active + 1));
+    viewer.addEventListener('click', event => {
+      if (event.target === viewer) viewer.close();
+    });
+    viewer.addEventListener('close', () => {
+      frame.src = 'about:blank';
+      document.body.classList.remove('viewer-open');
+      origin?.focus({preventScroll:true});
+      origin = null;
+      active = -1;
+    });
+  }
+
 })();
