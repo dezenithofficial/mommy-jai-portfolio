@@ -374,14 +374,7 @@
         brandClose.focus({preventScroll:true});
       });
     });
-    brandRetry.addEventListener('click',startBrandPlayer);
-    brandClose.addEventListener('click',() => brandDrawer.close());
-    brandPrev.addEventListener('click',() => displayBrandStory(brandIndex - 1));
-    brandNext.addEventListener('click',() => displayBrandStory(brandIndex + 1));
-    brandDrawer.addEventListener('click',event => {
-      if (event.target === brandDrawer) brandDrawer.close();
-    });
-    brandDrawer.addEventListener('close',() => {
+    const resetBrandDrawer = () => {
       clearBrandTimer();
       ++brandRequestIndex;
       brandFrame.src = 'about:blank';
@@ -389,7 +382,26 @@
       brandTrigger?.focus({preventScroll:true});
       brandTrigger = null;
       brandIndex = -1;
+    };
+    const closeBrandDrawer = () => {
+      if (brandDrawer.open) brandDrawer.close();
+      // The native close event is queued; stop audio and unlock scroll immediately.
+      resetBrandDrawer();
+    };
+    brandRetry.addEventListener('click',startBrandPlayer);
+    brandClose.addEventListener('click',closeBrandDrawer);
+    brandPrev.addEventListener('click',() => displayBrandStory(brandIndex - 1));
+    brandNext.addEventListener('click',() => displayBrandStory(brandIndex + 1));
+    brandDrawer.addEventListener('click',event => {
+      if (event.target === brandDrawer) closeBrandDrawer();
     });
+    brandDrawer.addEventListener('cancel',() => {
+      clearBrandTimer();
+      ++brandRequestIndex;
+      brandFrame.src = 'about:blank';
+      document.body.classList.remove('brand-drawer-open');
+    });
+    brandDrawer.addEventListener('close',resetBrandDrawer);
   }
 
 })();
