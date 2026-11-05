@@ -1348,7 +1348,7 @@ body.brand-drawer-open{overflow:hidden}
 }
 .work-gallery .work-art.colgate-photo::before{
   content:"";position:absolute;inset:-18px;z-index:0;
-  background:url("assets/colgate-featured-v40.webp?v=1") center/cover no-repeat;
+  background:url("assets/colgate-featured-v40.webp?v=2") center/cover no-repeat;
   filter:blur(18px) saturate(.72);opacity:.48;pointer-events:none;
 }
 .work-gallery .work-art.colgate-photo .colgate-photo-img{
