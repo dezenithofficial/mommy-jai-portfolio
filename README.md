@@ -1,46 +1,78 @@
-# Mommy Jai Ferrer — Creator Portfolio MVP
+# Mommy Jai Ferrer — Creator Portfolio
 
-Responsive static site for GitHub-connected Cloudflare Pages. No framework, server, or build step required.
+A lightweight, responsive editorial portfolio for **Mommy Jai Ferrer**, a Philippines-based mom and lifestyle creator offering UGC production, sponsored creator-published content, and selective brand collaborations.
 
-## Deployment status
+**Production:** https://mommy-jai-portfolio.pages.dev/  
+**GitHub:** `dezenithofficial/mommy-jai-portfolio`  
+**Deployment:** Cloudflare Pages, connected to the `main` branch (automatic deploys)
 
-**Deployment-ready source; not yet hosted.** The repository and Cloudflare Pages project still need to be created and linked. Avoid presenting a live staging URL until Cloudflare returns a successful deployment.
+## Current production features
 
-## Publish with GitHub + Cloudflare Pages
+- Editorial hero portrait, family portrait, and six photographic featured campaigns
+- Dedicated Bonakid flagship presentation and published-campaign evidence
+- Featured Work video/carousel modal and expandable campaign details
+- Eight additional published Brand Stories with in-page TikTok drawer and direct-post fallback
+- Responsive mobile navigation, continuously scrolling specialties ticker, and bottom quick-contact dock
+- Reduced-motion support, keyboard close/escape behavior, and no horizontal scrolling in tested viewports
+- Formspree collaboration inquiry form with explicit consent, accessible status messaging, spam honeypot, and email fallback
+- Separate `/privacy` notice
 
-1. In GitHub (signed in as the intended owner), create a repository named `mommy-jai-portfolio`. Set it **private** while preparing the website if the linked Cloudflare installation supports private repositories. Do not add starter files; the site already has a README.
-2. Upload the *contents of this folder*, not the parent folder, so `index.html`, `styles.css`, and `script.js` are at the repository root. Commit to the `main` branch.
-3. Open Cloudflare Dashboard → Workers & Pages → Create application → Pages → connect/import a Git repository. Authorize the GitHub account and select `mommy-jai-portfolio`.
-4. Set production branch `main`, framework preset **None**, build command **leave blank** (or `exit 0` if required), and output directory **`.`** (repository root). Root directory: repository root.
-5. Deploy and wait for Cloudflare to report success. Open the actual `*.pages.dev` address shown in the dashboard; **do not guess the URL**.
-6. Check at desktop and mobile widths: menu, hero, six links, social links, form, text contrast, responsive layout. Do not link the site in social bios until these checks pass.
-7. Add approved assets and a custom domain when ready. Pushes to `main` will redeploy automatically once Git integration is active.
+## Content and relationship integrity
 
-Cloudflare official reference: https://developers.cloudflare.com/pages/get-started/git-integration/
+The portfolio distinguishes paid sponsorship from product exchange and other creator work. Preserve those distinctions when adding brands or testimonials; do not invent campaign metrics. Use the original published links as primary campaign evidence. Product text in AI-assisted presentation imagery may differ from original packaging, so do not use edited illustrations as a source of factual product details.
 
-## Before social-bio launch
+## SEO and social sharing
 
-- **Portrait:** Replace the hero placeholder with an approved `assets/jai-portrait.jpg` (portrait crop, ideally at least 1000px wide).
-- **Featured work:** Validate all six Facebook/TikTok content links publicly; these were sourced from the Brand Evidence tracker and have not undergone independent frame-by-frame review.
-- **Relationship labels:** Confirm Bonakid's paid sponsorship and the five barter/cross-deal classifications before publishing.
-- **Content usage:** Do not assume social-media footage, children's images, brand logos, or licensed music may be downloaded and republished on the portfolio. Link to original posts unless reuse rights are confirmed.
-- **Inquiries:** The form composes an email to `mommyjaiferrer@gmail.com` in the visitor's configured email app. It does *not* transmit/store submissions. Test on mobile and desktop; publish the email address as a fallback.
-- **Privacy:** No visitor tracking, cookies, or backend storage are configured. Reassess disclosure/consent if analytics or an external form is later installed.
-- **SEO:** Add canonical URL and social preview image after the staging URL or custom domain is confirmed.
-- **Visual QA:** Local browser automation was blocked in the creation environment. Perform a manual desktop/mobile review on the actual Cloudflare deployment.
+- `index.html` has canonical and social metadata for the **current Pages domain**, plus WebSite/Person structured data.
+- `privacy.html` has its own canonical/metadata.
+- `assets/mommy-jai-social-preview.jpg` is the 1200 × 630 branded image for rich link previews.
+- `robots.txt` and `sitemap.xml` are at the repository root and served by Cloudflare.
+- If a custom domain is adopted, update all canonical, Open Graph, structured-data, robots and sitemap URLs together. Keep privacy and live form links aligned.
+
+Some social apps cache previews; use Facebook Sharing Debugger or the respective provider's rescrape function if a preview remains stale.
+
+## Conversion tracking and traffic attribution
+
+The collaboration form submits via **Formspree**: `https://formspree.io/f/mdeebebb`. A successful form submission is recorded in its submission inbox, and notification email is controlled in Formspree settings.
+
+For submitted inquiries only, the form adds privacy-safe hidden fields:
+- `portfolio_source`: `utm_source` if present, otherwise recognized social/search referral or `direct / untagged`
+- `portfolio_medium`: `utm_medium` or `unspecified`
+- `portfolio_campaign`: `utm_campaign` or `not tagged`
+
+Only basic tags, not full referrer URLs or unique visitor identifiers, are included. Nothing is sent to an analytics platform solely because a visitor opens the site.
+
+Example source-tagged links for use in social bios and outreach:
+
+- TikTok: https://mommy-jai-portfolio.pages.dev/?utm_source=tiktok&utm_medium=bio&utm_campaign=creator-portfolio
+- Instagram: https://mommy-jai-portfolio.pages.dev/?utm_source=instagram&utm_medium=bio&utm_campaign=creator-portfolio
+- Facebook: https://mommy-jai-portfolio.pages.dev/?utm_source=facebook&utm_medium=bio&utm_campaign=creator-portfolio
+- Brand outreach: https://mommy-jai-portfolio.pages.dev/?utm_source=outreach&utm_medium=direct&utm_campaign=brand-proposals
+
+### Visit analytics — Cloudflare account action
+
+**Web Analytics is not enabled merely by adding source code.** Enable it from the Cloudflare account:
+
+1. Open **Cloudflare Dashboard → Workers & Pages → mommy-jai-portfolio → Metrics**.
+2. Click **Enable** under **Web Analytics**.
+3. Trigger the next Pages deployment (for example, a GitHub commit).
+4. Confirm the Cloudflare beacon is injected into rendered HTML; view visitors and performance in **Web Analytics**.
+
+Cloudflare Web Analytics does **not** support custom click events as of November 2026. Use Cloudflare for visitor/page metrics and Formspree for actual inquiry conversions. If true per-campaign click events become necessary, choose a privacy-reviewed analytics provider with custom events, and update the privacy notice before activating it.
+
+Provider documentation: https://developers.cloudflare.com/pages/how-to/web-analytics/
 
 ## Files
 
-- `index.html`: page markup, content, and links
-- `styles.css`: responsive layout and presentation
-- `script.js`: mobile menu, copyright year, email inquiry action
-- `assets/favicon.svg`: website favicon
-- `_headers`: basic security-related HTTP response headers supported by Cloudflare Pages
+- `index.html`: structure, featured work, contact form, and page metadata
+- `styles.css`: responsive design, transitions, modal, drawer
+- `script.js`: navigation, Formspree submission, UTM attribution, motion, viewers
+- `ticker.js`: continuous specialties marquee
+- `privacy.html`: privacy notice available at `/privacy`
+- `assets/`: portrait, family image, campaign images, social preview, favicon
+- `robots.txt`, `sitemap.xml`: search crawler guidance
+- `_headers`: Cloudflare Pages security-related HTTP headers
 
-## Local preview
+## Maintenance checks
 
-Run `python -m http.server 8000` in this directory and browse to `http://localhost:8000`, or open `index.html` locally.
-
-## Brand data source
-
-See the `Portfolio Details`, `Brand Evidence`, and `Featured Content` tabs of the existing Mommy Jai Ferrer UGC Campaign Opportunity Tracker.
+After editing production content, test at minimum 320px and 390px mobile plus a desktop width; inspect images, campaign links, both drawers, keyboard navigation, and the inquiry form's success and failure messages. Avoid using the real Formspree endpoint for repetitive test submissions; mock HTTP success/failure when possible.
