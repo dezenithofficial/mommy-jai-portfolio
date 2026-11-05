@@ -1,0 +1,5 @@
+# Mommy Jai Ferrer creator portfolio
+User-agent: *
+Allow: /
+
+Sitemap: https://mommy-jai-portfolio.pages.dev/sitemap.xml
