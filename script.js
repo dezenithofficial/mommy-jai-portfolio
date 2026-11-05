@@ -258,4 +258,69 @@
     });
   }
 
+}
+  // Additional Brand Stories drawer V3.7.
+  // An in-page TikTok preview; unmodified post links remain the no-JS fallback.
+  const brandDrawer = document.getElementById('brand-story-drawer');
+  const brandStories = [...document.querySelectorAll('.brand-story-links a[data-video-id]')];
+  if (brandDrawer && typeof brandDrawer.showModal === 'function' && brandStories.length) {
+    const brandFrame = document.getElementById('brand-drawer-frame');
+    const brandTitle = document.getElementById('brand-drawer-title');
+    const brandOriginal = document.getElementById('brand-drawer-original');
+    const brandFallback = document.getElementById('brand-drawer-fallback');
+    const brandClose = document.getElementById('brand-drawer-close');
+    const brandPrev = document.getElementById('brand-drawer-prev');
+    const brandNext = document.getElementById('brand-drawer-next');
+    const brandCount = document.getElementById('brand-drawer-count');
+    const brandContent = document.getElementById('brand-drawer-content');
+    let brandIndex = -1;
+    let brandTrigger = null;
+
+    const displayBrandStory = index => {
+      if (index < 0 || index >= brandStories.length) return;
+      const link = brandStories[index];
+      const id = link.dataset.videoId || '';
+      if (!/^[0-9]{15,22}$/.test(id)) return;
+      brandIndex = index;
+      const name = link.querySelector('span')?.textContent?.trim() || 'Brand story';
+      brandTitle.textContent = name;
+      brandOriginal.href = link.href;
+      brandFallback.href = link.href;
+      brandCount.textContent = String(index + 1).padStart(2,'0') + ' / ' + String(brandStories.length).padStart(2,'0');
+      brandPrev.disabled = index === 0;
+      brandNext.disabled = index === brandStories.length - 1;
+      // Clear playback before changing embedded campaigns.
+      brandFrame.src = 'about:blank';
+      brandFrame.title = 'Published ' + name + ' TikTok video';
+      if (!brandDrawer.open) brandDrawer.showModal();
+      document.body.classList.add('brand-drawer-open');
+      brandContent.scrollTop = 0;
+      brandFrame.src = 'https://www.tiktok.com/player/v1/' + id + '?controls=1&autoplay=0&description=0&music_info=0&rel=0';
+    };
+
+    brandStories.forEach((link,index) => {
+      link.addEventListener('click',event => {
+        if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        if (!/^[0-9]{15,22}$/.test(link.dataset.videoId || '')) return;
+        event.preventDefault();
+        brandTrigger = link;
+        displayBrandStory(index);
+        brandClose.focus({preventScroll:true});
+      });
+    });
+    brandClose.addEventListener('click',() => brandDrawer.close());
+    brandPrev.addEventListener('click',() => displayBrandStory(brandIndex - 1));
+    brandNext.addEventListener('click',() => displayBrandStory(brandIndex + 1));
+    brandDrawer.addEventListener('click',event => {
+      if (event.target === brandDrawer) brandDrawer.close();
+    });
+    brandDrawer.addEventListener('close',() => {
+      brandFrame.src = 'about:blank';
+      document.body.classList.remove('brand-drawer-open');
+      brandTrigger?.focus({preventScroll:true});
+      brandTrigger = null;
+      brandIndex = -1;
+    });
+  }
+
 })();
