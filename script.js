@@ -258,7 +258,6 @@
     });
   }
 
-}
   // Additional Brand Stories drawer V3.7.
   // An in-page TikTok preview; unmodified post links remain the no-JS fallback.
   const brandDrawer = document.getElementById('brand-story-drawer');
