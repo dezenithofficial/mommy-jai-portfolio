@@ -1368,99 +1368,31 @@ body.brand-drawer-open{overflow:hidden}
 }
 
 
-/* V4.1 — resilient TikTok product-story viewer with an honest playback fallback */
-.brand-drawer-embed{
+/* V4.2 — Match Featured Work player behavior; no overlay obscures video controls. */
+.brand-drawer-embed {
   position:relative;
   width:min(100%,325px);
   height:auto;
   min-height:0;
   max-height:none;
   aspect-ratio:325 / 578;
-  isolation:isolate;
 }
-.brand-drawer-embed iframe{position:absolute;inset:0;width:100%;height:100%}
-.brand-drawer-player-state{
+.brand-drawer-embed iframe{
   position:absolute;
   inset:0;
-  z-index:4;
-  padding:clamp(17px,3vw,27px);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:15px;
-  text-align:center;
-  background:linear-gradient(150deg,rgba(244,233,224,.98),rgba(225,205,193,.98));
-  color:#3a302b;
-}
-.brand-drawer-player-state[hidden]{display:none!important}
-.brand-drawer-state-icon{
-  display:grid;
-  place-items:center;
-  width:56px;
-  height:56px;
-  padding-left:3px;
-  border:1px solid rgba(255,250,246,.72);
-  border-radius:50%;
-  background:#956f63;
-  color:#fff9f3;
-  font:600 21px/1 var(--sans);
-  box-shadow:0 8px 24px rgba(83,56,45,.19);
-}
-.brand-drawer-state-title{
-  margin:2px 0 0;
-  font:500 clamp(27px,3vw,34px)/1.1 var(--serif);
-  letter-spacing:-.025em;
-  color:#352d2a;
-}
-.brand-drawer-state-copy{
-  max-width:270px;
-  margin:0;
-  font:400 13px/1.65 var(--sans);
-  color:#675650;
-}
-.brand-drawer-watch{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  min-height:46px;
   width:100%;
-  max-width:255px;
-  padding:11px 16px;
-  border-radius:6px;
-  background:#8f6c5f;
-  color:#fffaf7;
-  text-decoration:none;
-  font:700 13px/1.4 var(--sans);
-}
-.brand-drawer-watch:hover{background:#725348}
-.brand-drawer-retry{
+  height:100%;
+  display:block;
   border:0;
-  border-bottom:1px solid currentColor;
-  padding:8px 2px;
-  min-height:40px;
-  background:transparent;
-  color:#654b42;
-  font:700 12px/1.4 var(--sans);
-  cursor:pointer;
 }
-.brand-drawer-retry[hidden]{display:none!important}
-.brand-drawer-state-icon[data-mode="loading"]{
-  animation:brand-drawer-soft-pulse 1.7s ease-in-out infinite;
+@media (max-width:700px) {
+  .brand-drawer-embed {
+    width:min(100%,325px);
+    height:auto;
+    min-height:0;
+    max-height:none;
+  }
 }
-@keyframes brand-drawer-soft-pulse{
-  0%,100%{opacity:.75;transform:scale(.97)}
-  50%{opacity:1;transform:scale(1)}
-}
-@media(max-width:700px){
-  .brand-drawer-embed{width:min(100%,325px);height:auto;min-height:0;max-height:none;aspect-ratio:325/578}
-}
-@media(max-width:355px){
+@media (max-width:355px) {
   .brand-drawer-embed{height:auto;min-height:0;max-height:none}
-  .brand-drawer-player-state{padding:16px;gap:11px}
-  .brand-drawer-state-title{font-size:26px}
-}
-@media(prefers-reduced-motion:reduce){
-  .brand-drawer-state-icon[data-mode="loading"]{animation:none}
 }
