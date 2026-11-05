@@ -258,8 +258,9 @@
     });
   }
 
-  // Additional Brand Stories drawer V3.7.
-  // An in-page TikTok preview; unmodified post links remain the no-JS fallback.
+  // Additional Brand Stories drawer V4.1.
+  // TikTok Shop videos can be restricted in third-party embeds. Never leave a dead player
+  // as the only action: offer a working original-post link and optional retry.
   const brandDrawer = document.getElementById('brand-story-drawer');
   const brandStories = [...document.querySelectorAll('.brand-story-links a[data-video-id]')];
   if (brandDrawer && typeof brandDrawer.showModal === 'function' && brandStories.length) {
@@ -267,6 +268,12 @@
     const brandTitle = document.getElementById('brand-drawer-title');
     const brandOriginal = document.getElementById('brand-drawer-original');
     const brandFallback = document.getElementById('brand-drawer-fallback');
+    const brandWatch = document.getElementById('brand-drawer-watch');
+    const brandPlayerState = document.getElementById('brand-drawer-player-state');
+    const brandStateTitle = document.getElementById('brand-drawer-state-title');
+    const brandStateCopy = document.getElementById('brand-drawer-state-copy');
+    const brandStateIcon = brandPlayerState.querySelector('.brand-drawer-state-icon');
+    const brandRetry = document.getElementById('brand-drawer-retry');
     const brandClose = document.getElementById('brand-drawer-close');
     const brandPrev = document.getElementById('brand-drawer-prev');
     const brandNext = document.getElementById('brand-drawer-next');
@@ -274,6 +281,52 @@
     const brandContent = document.getElementById('brand-drawer-content');
     let brandIndex = -1;
     let brandTrigger = null;
+    let brandPendingTimer = null;
+    let brandRequestIndex = 0;
+
+    const clearBrandTimer = () => {
+      if (brandPendingTimer !== null) {
+        clearTimeout(brandPendingTimer);
+        brandPendingTimer = null;
+      }
+    };
+    const brandLoading = () => {
+      brandPlayerState.hidden = false;
+      brandStateTitle.textContent = 'Loading video preview';
+      brandStateCopy.textContent = 'Connecting to TikTok’s official player. The original post is available below.';
+      brandStateIcon.dataset.mode = 'loading';
+      brandRetry.hidden = true;
+    };
+    const brandUnavailable = () => {
+      clearBrandTimer();
+      brandPlayerState.hidden = false;
+      brandStateTitle.textContent = 'Preview unavailable here';
+      brandStateCopy.textContent = 'TikTok is not providing playable video in this viewer. You can watch the published post on TikTok.';
+      brandStateIcon.dataset.mode = 'unavailable';
+      brandRetry.hidden = false;
+      // Stop attempts to play invisible third-party media.
+      brandFrame.src = 'about:blank';
+    };
+
+    const startBrandPlayer = () => {
+      if (brandIndex < 0 || !brandDrawer.open) return;
+      const id = brandStories[brandIndex].dataset.videoId || '';
+      if (!/^[0-9]{15,22}$/.test(id)) return;
+      clearBrandTimer();
+      const request = ++brandRequestIndex;
+      brandLoading();
+      brandFrame.src = 'about:blank';
+      brandFrame.title = 'Published TikTok video for ' + brandTitle.textContent;
+      // TikTok's documented oEmbed player configuration; muted autoplay can
+      // succeed where unmuted playback is prevented by browser policies.
+      brandFrame.src = 'https://www.tiktok.com/player/v1/' + id
+        + '?embed_from=oembed&controls=1&autoplay=1&muted=1&description=0&music_info=0';
+      brandPendingTimer = setTimeout(() => {
+        if (brandDrawer.open && brandIndex >= 0 && brandRequestIndex === request) {
+          brandUnavailable();
+        }
+      }, 8000);
+    };
 
     const displayBrandStory = index => {
       if (index < 0 || index >= brandStories.length) return;
@@ -285,17 +338,31 @@
       brandTitle.textContent = name;
       brandOriginal.href = link.href;
       brandFallback.href = link.href;
+      brandWatch.href = link.href;
       brandCount.textContent = String(index + 1).padStart(2,'0') + ' / ' + String(brandStories.length).padStart(2,'0');
       brandPrev.disabled = index === 0;
       brandNext.disabled = index === brandStories.length - 1;
-      // Clear playback before changing embedded campaigns.
-      brandFrame.src = 'about:blank';
-      brandFrame.title = 'Published ' + name + ' TikTok video';
       if (!brandDrawer.open) brandDrawer.showModal();
       document.body.classList.add('brand-drawer-open');
       brandContent.scrollTop = 0;
-      brandFrame.src = 'https://www.tiktok.com/player/v1/' + id + '?controls=1&autoplay=0&description=0&music_info=0&rel=0';
+      startBrandPlayer();
     };
+
+    // The official player reports readiness and errors via postMessage.
+    window.addEventListener('message',event => {
+      if (!brandDrawer.open || event.origin !== 'https://www.tiktok.com'
+          || event.source !== brandFrame.contentWindow) return;
+      const data = event.data;
+      if (!data || data['x-tiktok-player'] !== true) return;
+      if (data.type === 'onPlayerReady' || (data.type === 'onStateChange' && data.value === 1)) {
+        clearBrandTimer();
+        brandPlayerState.hidden = true;
+        brandRetry.hidden = true;
+        brandStateIcon.dataset.mode = '';
+      } else if (data.type === 'onPlayerError' || data.type === 'onError') {
+        brandUnavailable();
+      }
+    });
 
     brandStories.forEach((link,index) => {
       link.addEventListener('click',event => {
@@ -307,6 +374,7 @@
         brandClose.focus({preventScroll:true});
       });
     });
+    brandRetry.addEventListener('click',startBrandPlayer);
     brandClose.addEventListener('click',() => brandDrawer.close());
     brandPrev.addEventListener('click',() => displayBrandStory(brandIndex - 1));
     brandNext.addEventListener('click',() => displayBrandStory(brandIndex + 1));
@@ -314,6 +382,8 @@
       if (event.target === brandDrawer) brandDrawer.close();
     });
     brandDrawer.addEventListener('close',() => {
+      clearBrandTimer();
+      ++brandRequestIndex;
       brandFrame.src = 'about:blank';
       document.body.classList.remove('brand-drawer-open');
       brandTrigger?.focus({preventScroll:true});
