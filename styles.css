@@ -1558,7 +1558,7 @@ body.brand-drawer-open{overflow:hidden}
 
 /* V4.8 — Mobile UX Refinement.
    Preserve editorial desktop and hero while improving clarity and conversion on phones. */
-@media (max-width: 430px) {
+@media (max-width: 540px) {
   /* Give project photography and titles room to communicate at narrow widths. */
   .work-grid.work-gallery {
     grid-template-columns:minmax(0,1fr);
@@ -1597,6 +1597,14 @@ body.brand-drawer-open{overflow:hidden}
   .campaign-details summary {font-size:13px}
   .campaign-facts dd {font-size:13px;line-height:1.6}
   .campaign-gallery-heading>p {font-size:14px}
+}
+
+@media (min-width:541px) and (max-width:700px) {
+  /* Two-column cards have enough width here; keep their metadata legible. */
+  .work-gallery .card-type {font-size:11px;letter-spacing:.45px;line-height:1.5}
+  .work-gallery .card-info p {font-size:13px;line-height:1.55}
+  .campaign-details summary {font-size:13px}
+  .campaign-facts dd {font-size:13px}
 }
 
 @media (max-width:767px) {
