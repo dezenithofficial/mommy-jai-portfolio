@@ -131,7 +131,7 @@
   if (mediumField) mediumField.value = campaignTag(campaignParams.get('utm_medium')) || 'unspecified';
   if (campaignField) campaignField.value = campaignTag(campaignParams.get('utm_campaign')) || 'not tagged';
 
-  // V4.7 — Soft Cinematic Editorial motion.
+  // V4.8 — Refined Soft Cinematic Editorial motion.
   // Content remains visible without JS, in unsupported browsers, and for reduced motion.
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const bar = document.querySelector('.scroll-progress span');
@@ -173,7 +173,7 @@
     const items = [...document.querySelectorAll(selector)];
     items.forEach((el, i) => {
       el.classList.add('reveal-item');
-      el.style.setProperty('--mj-reveal-delay', (i % 3) * 65 + 'ms');
+      el.style.setProperty('--mj-reveal-delay', (i % 3) * 45 + 'ms');
     });
     document.body.classList.add('js-motion');
     const observer = new IntersectionObserver(entries => {
@@ -189,8 +189,8 @@
     }));
   }
 
-  // Context-aware mobile conversion dock. Only appears when the hero CTA has
-  // scrolled out, and disappears near the contact form or while using inputs.
+  // V4.8 compact mobile inquiry action: shown only while useful, hidden for
+  // the contact section, keyboard use, open navigation, or any modal viewer.
   const dock = document.getElementById('mobile-cta');
   const heroActions = document.querySelector('.hero-actions');
   const contact = document.getElementById('contact');
@@ -201,10 +201,11 @@
     const heroBelowHeader = heroActions.getBoundingClientRect().bottom < 80;
     const contactNotYetReached = contact.getBoundingClientRect().top > window.innerHeight * 0.78;
     const menuOpen = menu?.getAttribute('aria-expanded') === 'true';
+    const dialogOpen = !!document.querySelector('dialog[open]');
     const vv = window.visualViewport;
     const keyboardOpen = !!vv && vv.height < window.innerHeight * 0.72;
     const show = mobileViewport.matches && heroBelowHeader &&
-      contactNotYetReached && !formFocused && !keyboardOpen && !menuOpen;
+      contactNotYetReached && !formFocused && !keyboardOpen && !menuOpen && !dialogOpen;
     dock.classList.toggle('is-visible', show);
     dock.setAttribute('aria-hidden', String(!show));
     dock.inert = !show;
@@ -228,6 +229,12 @@
   window.addEventListener('resize', updateDock);
   window.visualViewport?.addEventListener('resize', updateDock);
   mobileViewport.addEventListener?.('change', updateDock);
+  // Modal dialogs toggle the dock even if they are opened by keyboard or script.
+  if (typeof MutationObserver !== 'undefined') {
+    const dialogObserver = new MutationObserver(updateDock);
+    document.querySelectorAll('dialog').forEach(dialog =>
+      dialogObserver.observe(dialog, { attributes:true, attributeFilter:['open'] }));
+  }
   requestAnimationFrame(updateDock);
 
   // In-page featured campaign viewer (V1.4). Loads official embeds only after click.
