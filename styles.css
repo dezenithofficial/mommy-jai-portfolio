@@ -1633,8 +1633,8 @@ body.brand-drawer-open{overflow:hidden}
     line-height:1.2;
   }
   .mobile-cta-primary {
-    padding:0 17px;
-    gap:9px;
+    padding:0 13px;
+    gap:7px;
     white-space:nowrap;
   }
   .mobile-cta-secondary {display:none}
