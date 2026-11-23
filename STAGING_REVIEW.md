@@ -15,7 +15,7 @@ Status: FOR REVIEW, NOT PRODUCTION. Branch: staging-ugc-paid-collabs.
 - Published Facebook photo supplies assets/gogi-marami-post.jpg, not generated stock photography.
 
 ## New engagements requiring verified public evidence
-- WhiteClover Dental Clinic UGC: user confirmed, but approved sample, scope and publication permission outstanding.
+- Dental clinic UGC engagement: user confirmed, but approved sample, scope and publication permission outstanding.
 - Paid agency collaboration: brand identity and approved creative sample not yet verified.
 - Hair salon UGC: content sample and sharing permission not yet supplied.
 - Focus pillars describe subject matter, not verified paid-case counts.
