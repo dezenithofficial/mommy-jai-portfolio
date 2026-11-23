@@ -1,6 +1,6 @@
 # Staging review — Mommy Jai UGC & paid collaborations
 
-Status: FOR REVIEW, NOT PRODUCTION. Branch: staging-ugc-paid-collabs. Version: 4.6 staging.
+Status: FOR REVIEW, NOT PRODUCTION. Branch: staging-ugc-paid-collabs. Version: 4.7 staging.
 
 ## Agreed positioning direction
 - UGC Creator / Lifestyle Storyteller / Brand Collaborator.
@@ -29,6 +29,16 @@ Status: FOR REVIEW, NOT PRODUCTION. Branch: staging-ugc-paid-collabs. Version: 4
 - The Brand Stories drawer supports TikTok, Facebook posts and Facebook Reels, with an original-platform fallback link. Actual embedded playback is subject to each platform's restrictions.
 - The second Gogi post opens independently; clicking the featured image opens the Reel viewer.
 
+## V4.7 motion refinement — Soft Cinematic Editorial
+- Retained hero portrait, original floating stickers, ambient glow, motion ticker, gallery layout, viewers, Brand Stories drawer and contact form.
+- Added one-time sequenced hero-copy and portrait entrances; no new continual animations or third-party animation libraries.
+- Standardized one-time scroll reveals for section headings, whole campaign cards, service cards, about copy, brand index and contact content, avoiding nested animated card links and repetitive replays.
+- Replaced sweeping campaign-card shine with subtle photo hover zoom and a quiet lift on hover/focus; hover effects are pointer-capability aware.
+- Added restrained CTA arrow microinteraction and featured viewer entrance; kept the pre-existing Brand Stories drawer behavior.
+- Motion is progressive enhancement: without JS or IntersectionObserver/CSS translate support, content stays visible. Respect prefers-reduced-motion, including preference changes during a session.
+- Performance: use CSS transforms/translate and opacity, one IntersectionObserver; no autoplay, heavy scroll handlers, added dependencies or forced parallax.
+- Staging asset versions: styles.css?v=4.7.0-staging and script.js?v=1.9.0. Production remains unchanged.
+
 ## Before merging to production
 1. Review desktop, iPhone and tablet layout, including the motion ticker.
 2. Confirm Gogi image, relationship wording and permissions.
@@ -36,3 +46,4 @@ Status: FOR REVIEW, NOT PRODUCTION. Branch: staging-ugc-paid-collabs. Version: 4
 4. Remove staging noindex,nofollow robots meta from home and privacy before merging.
 5. Revalidate Formspree success/failure, both viewers, keyboard navigation, images and external links.
 6. Verify both new Facebook samples open in the Brand Stories drawer and their external fallback links work; validate desktop and mobile layout for the 11-item brand grid.
+7. Review V4.7 entrance timing and CTA clarity on desktop/mobile, test in-page navigation, reduced-motion mode, keyboard focus and slow-loading images. Avoid promoting staging until real-device visual QA is complete.
