@@ -1554,3 +1554,108 @@ body.brand-drawer-open{overflow:hidden}
   .campaign-item:hover .work-art-photo img { translate:none!important;transform:none!important;transition:none!important }
   .campaign-viewer[open],.campaign-viewer[open]::backdrop { animation:none!important;translate:none!important }
 }
+
+
+/* V4.8 — Mobile UX Refinement.
+   Preserve editorial desktop and hero while improving clarity and conversion on phones. */
+@media (max-width: 430px) {
+  /* Give project photography and titles room to communicate at narrow widths. */
+  .work-grid.work-gallery {
+    grid-template-columns:minmax(0,1fr);
+    gap:16px;
+  }
+  .work-gallery .work-art {
+    height:clamp(228px,64vw,274px);
+    padding:0;
+  }
+  .work-gallery .card-info {
+    min-height:0;
+    padding:18px 20px 19px;
+  }
+  .work-gallery .card-info h3 {
+    font-size:clamp(27px,7vw,32px);
+    line-height:1.13;
+  }
+  .work-gallery .card-info p {
+    font-size:14px;
+    line-height:1.55;
+  }
+  .work-gallery .card-type {
+    font-size:11px;
+    line-height:1.5;
+    letter-spacing:.55px;
+  }
+  .work-gallery .work-art-photo .campaign-tag {
+    font-size:10px;
+    letter-spacing:.65px;
+    padding:7px 9px;
+  }
+  .work-gallery .work-art-photo .campaign-count {
+    font-size:10px;
+  }
+  .campaign-details {padding:0 19px}
+  .campaign-details summary {font-size:13px}
+  .campaign-facts dd {font-size:13px;line-height:1.6}
+  .campaign-gallery-heading>p {font-size:14px}
+}
+
+@media (max-width:767px) {
+  /* One small action instead of a bottom navigation bar covering project content. */
+  .mobile-cta {
+    width:max-content;
+    max-width:calc(100vw - 26px);
+    left:auto;
+    right:max(12px, env(safe-area-inset-right));
+    bottom:calc(13px + env(safe-area-inset-bottom, 0px));
+    padding:4px;
+    gap:0;
+    align-items:center;
+    border-radius:999px;
+    background:rgba(250,247,243,.94);
+    box-shadow:0 9px 30px rgba(69,45,39,.15);
+    transform:translate3d(0,calc(100% + 26px),0);
+    transition:transform .26s cubic-bezier(.2,.75,.25,1),opacity .2s ease,visibility .2s ease;
+  }
+  .mobile-cta.is-visible {transform:translate3d(0,0,0)}
+  .mobile-cta a {
+    min-height:46px;
+    border-radius:999px;
+    font-size:13px;
+    letter-spacing:.01em;
+    line-height:1.2;
+  }
+  .mobile-cta-primary {
+    padding:0 17px;
+    gap:9px;
+    white-space:nowrap;
+  }
+  .mobile-cta-secondary {display:none}
+  /* Two distinct offers remain visible, but are faster to read on phones. */
+  .services-grid .service-card {
+    padding:29px 27px;
+  }
+  .services-grid .service-card > p:not(.service-overline):not(.service-distinction) {
+    font-size:14px;
+    line-height:1.65;
+  }
+  .services-grid .service-card li {
+    font-size:14px;
+    line-height:1.58;
+  }
+  .services-grid .service-distinction {
+    font-size:13px!important;
+    line-height:1.63!important;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* One-time reveals should support reading, not slow down rapid scrolling. */
+  .js-motion .reveal-item {
+    translate:0 14px;
+    transition-duration:.48s,.52s;
+  }
+  .js-motion .reveal-item.is-visible {translate:0 0}
+}
+@media (prefers-reduced-motion:reduce) {
+  .mobile-cta {transition:none!important}
+  .js-motion .reveal-item {translate:none!important;opacity:1!important}
+}
