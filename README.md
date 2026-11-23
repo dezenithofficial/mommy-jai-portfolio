@@ -76,3 +76,7 @@ Provider documentation: https://developers.cloudflare.com/pages/how-to/web-analy
 ## Maintenance checks
 
 After editing production content, test at minimum 320px and 390px mobile plus a desktop width; inspect images, campaign links, both drawers, keyboard navigation, and the inquiry form's success and failure messages. Avoid using the real Formspree endpoint for repetitive test submissions; mock HTTP success/failure when possible.
+
+## Staging branch — UGC & paid collaborations (November 2026)
+
+Branch staging-ugc-paid-collabs is NOT production. It is explicitly noindex and nofollow. Remove staging-only robots tags and update stylesheet cache query before promoting to main. See STAGING_REVIEW.md for evidence and approval requirements.
