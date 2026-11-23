@@ -39,6 +39,16 @@ Status: FOR REVIEW, NOT PRODUCTION. Branch: staging-ugc-paid-collabs. Version: 4
 - Performance: use CSS transforms/translate and opacity, one IntersectionObserver; no autoplay, heavy scroll handlers, added dependencies or forced parallax.
 - Staging asset versions: styles.css?v=4.7.0-staging and script.js?v=1.9.0. Production remains unchanged.
 
+## V4.7 QA — November 23, 2026
+- Live staging response HTTP 200 with `styles.css?v=4.7.0-staging` and `script.js?v=1.9.0`; live production HTTP 200 without those staging versions.
+- JavaScript parsed successfully and CSS delimiters balanced; browser loaded both assets.
+- Tested headless Chrome desktop at 1440×900 and true mobile emulation at 390×844. Hero rendered at full opacity; no horizontal document overflow (desktop document/client width 1425px; mobile document/client width 390px).
+- Confirmed hero entrance is active in default motion and absent in emulated `prefers-reduced-motion:reduce`. Reduced-motion mode left hero fully visible.
+- Confirmed Featured Work viewer and Brand Stories drawer both open from their cards on desktop and mobile. Original Facebook link available from brand drawer.
+- Staging images and editorial layout visually inspected at desktop and emulated mobile viewports.
+- Remaining manual QA: real iPhone/Android testing and low-power performance; actual third-party embed playback under account restrictions; inquiry form delivery (do not submit a live inquiry for QA).
+- Browser emulation and source checks do not guarantee all devices or network conditions behave identically.
+
 ## Before merging to production
 1. Review desktop, iPhone and tablet layout, including the motion ticker.
 2. Confirm Gogi image, relationship wording and permissions.
