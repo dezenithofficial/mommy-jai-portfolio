@@ -131,7 +131,8 @@
   if (mediumField) mediumField.value = campaignTag(campaignParams.get('utm_medium')) || 'unspecified';
   if (campaignField) campaignField.value = campaignTag(campaignParams.get('utm_campaign')) || 'not tagged';
 
-  // Motion effects enhance rather than gate the content; respect reduced motion.
+  // V4.7 — Soft Cinematic Editorial motion.
+  // Content remains visible without JS, in unsupported browsers, and for reduced motion.
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const bar = document.querySelector('.scroll-progress span');
   const header = document.querySelector('.site-header');
@@ -143,14 +144,49 @@
   track();
   addEventListener('scroll', track, {passive:true});
   addEventListener('resize', track);
-  if (!reduced && 'IntersectionObserver' in window) {
-    const items = [...document.querySelectorAll('.hero-copy > *, .section-heading > *, .work-card, .service-card, .about-art, .about-copy > *, .brand-content > *, .contact-heading > *, .inquiry-form > *')];
+
+  const motionSupported = !reduced && 'IntersectionObserver' in window &&
+    typeof CSS !== 'undefined' && CSS.supports('translate', '0 1px');
+  if (motionSupported) {
+    // Hero has a separate one-time entrance; never hide or reanimate it on scroll.
+    document.body.classList.add('motion-ready');
+    const selector = [
+      '.section-heading > *',
+      '.spotlight-eyebrow',
+      '.campaign-gallery-heading > *',
+      '.campaign-item',
+      '.creator-value-intro',
+      '.creator-value-points > div',
+      '.service-card',
+      '.creative-focus',
+      '.other-collabs',
+      '.about-art',
+      '.about-copy > *',
+      '.brand-section .brand-content > .kicker',
+      '.brand-section .brand-content > h2',
+      '.brand-section .brand-introduction',
+      '.brand-story-links li',
+      '.brand-section .brand-legal',
+      '.contact-heading > *',
+      '.inquiry-form'
+    ].join(', ');
+    const items = [...document.querySelectorAll(selector)];
+    items.forEach((el, i) => {
+      el.classList.add('reveal-item');
+      el.style.setProperty('--mj-reveal-delay', (i % 3) * 65 + 'ms');
+    });
     document.body.classList.add('js-motion');
-    items.forEach((el,i) => { el.classList.add('reveal-item'); el.style.transitionDelay = (i%4)*90+'ms'; });
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
-    }, {threshold:0.08,rootMargin:'0px 0px 30px 0px'});
-    items.forEach(el => observer.observe(el));
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px 44px 0px' });
+    // Schedule observation after the initial hidden state has painted.
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      items.forEach(el => observer.observe(el));
+    }));
   }
 
   // Context-aware mobile conversion dock. Only appears when the hero CTA has
@@ -279,13 +315,15 @@
     });
   }
 
-  // V4.2 — Brand Stories uses the same TikTok player configuration as Featured Work.
+  // V4.6 — Brand Stories supports both TikTok and verified Facebook post / Reel embeds.
   // The drawer must never cover or forcibly expire a third-party player.
   const brandDrawer = document.getElementById('brand-story-drawer');
-  const brandStories = [...document.querySelectorAll('.brand-story-links a[data-video-id]')];
+  const brandStories = [...document.querySelectorAll('.brand-story-links a[data-video-id], .brand-story-links a[data-embed-kind][data-embed-ref]')];
   if (brandDrawer && typeof brandDrawer.showModal === 'function' && brandStories.length) {
     const brandFrame = document.getElementById('brand-drawer-frame');
     const brandTitle = document.getElementById('brand-drawer-title');
+    const brandKicker = document.getElementById('brand-drawer-kicker');
+    const brandCaption = document.getElementById('brand-drawer-caption');
     const brandOriginal = document.getElementById('brand-drawer-original');
     const brandFallback = document.getElementById('brand-drawer-fallback');
     const brandClose = document.getElementById('brand-drawer-close');
@@ -296,23 +334,44 @@
     let brandIndex = -1;
     let brandTrigger = null;
 
+    const getBrandEmbed = link => {
+      const id = link.dataset.videoId || '';
+      if (/^[0-9]{15,22}$/.test(id)) {
+        return 'https://www.tiktok.com/player/v1/' + id
+          + '?controls=1&autoplay=0&description=0&music_info=0&rel=0';
+      }
+      const kind = link.dataset.embedKind || '';
+      const ref = link.dataset.embedRef || '';
+      if ((kind === 'facebook-video' || kind === 'facebook-post') && ref.startsWith('https://www.facebook.com/')) {
+        const route = kind === 'facebook-video' ? 'video.php' : 'post.php';
+        const url = new URL('https://www.facebook.com/plugins/' + route);
+        url.searchParams.set('href', ref);
+        url.searchParams.set('width', '325');
+        url.searchParams.set('show_text', kind === 'facebook-post' ? 'true' : 'false');
+        return url.toString();
+      }
+      return '';
+    };
+
     const showBrandStory = index => {
       if (index < 0 || index >= brandStories.length) return;
       const link = brandStories[index];
-      const id = link.dataset.videoId || '';
-      if (!/^[0-9]{15,22}$/.test(id)) return;
+      const src = getBrandEmbed(link);
+      if (!src) return;
       brandIndex = index;
       const name = link.querySelector('span')?.textContent?.trim() || 'Brand story';
+      const platform = link.dataset.videoId ? 'TikTok' : 'Facebook';
       brandTitle.textContent = name;
+      brandKicker.textContent = link.dataset.storyType || 'PUBLISHED PRODUCT-EXCHANGE FEATURE';
+      brandCaption.textContent = link.dataset.storyCaption || 'A creator-published everyday product story on TikTok.';
       brandOriginal.href = link.href;
       brandFallback.href = link.href;
       brandCount.textContent = String(index + 1).padStart(2,'0') + ' / ' + String(brandStories.length).padStart(2,'0');
       brandPrev.disabled = index === 0;
       brandNext.disabled = index === brandStories.length - 1;
       brandFrame.src = 'about:blank';
-      brandFrame.title = 'Embedded ' + name + ' on TikTok';
-      brandFrame.src = 'https://www.tiktok.com/player/v1/' + id
-        + '?controls=1&autoplay=0&description=0&music_info=0&rel=0';
+      brandFrame.title = 'Embedded ' + name + ' on ' + platform;
+      brandFrame.src = src;
       if (!brandDrawer.open) brandDrawer.showModal();
       document.body.classList.add('brand-drawer-open');
       brandContent.scrollTop = 0;
@@ -332,7 +391,7 @@
     brandStories.forEach((link,index) => {
       link.addEventListener('click',event => {
         if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-        if (!/^[0-9]{15,22}$/.test(link.dataset.videoId || '')) return;
+        if (!getBrandEmbed(link)) return;
         event.preventDefault();
         brandTrigger = link;
         showBrandStory(index);

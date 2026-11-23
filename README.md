@@ -8,18 +8,18 @@ A lightweight, responsive editorial portfolio for **Mommy Jai Ferrer**, a Philip
 
 ## Current production features
 
-- Editorial hero portrait, family portrait, and six photographic featured campaigns
+- Editorial hero portrait, family portrait, Bonakid flagship and six additional selected campaigns
 - Dedicated Bonakid flagship presentation and published-campaign evidence
 - Featured Work video/carousel modal and expandable campaign details
-- Nine additional published Brand Stories with in-page TikTok drawer and direct-post fallback
+- Eleven additional published Brand Stories (nine TikTok and two Facebook), with in-page previews and direct-post fallback
 - Responsive mobile navigation, continuously scrolling specialties ticker, and bottom quick-contact dock
-- Reduced-motion support, keyboard close/escape behavior, and no horizontal scrolling in tested viewports
+- Soft Cinematic Editorial motion system with reduced-motion support, keyboard close/escape behavior, and no horizontal scrolling in tested viewports
 - Formspree collaboration inquiry form with explicit consent, accessible status messaging, spam honeypot, and email fallback
 - Separate `/privacy` notice
 
 ## Content and relationship integrity
 
-The portfolio distinguishes paid sponsorship from product exchange and other creator work. Preserve those distinctions when adding brands or testimonials; do not invent campaign metrics. Use the original published links as primary campaign evidence. Product text in AI-assisted presentation imagery may differ from original packaging, so do not use edited illustrations as a source of factual product details.
+The portfolio distinguishes paid sponsorship from hosted experiences, gifted PR, product exchange and other creator work. Paid campaign experience appears on the Bonakid card; other relationship terms are documented within project details. Preserve those distinctions when adding brands or testimonials; do not invent campaign metrics. Use the original published links as primary campaign evidence. Product text in AI-assisted presentation imagery may differ from original packaging, so do not use edited illustrations as a source of factual product details.
 
 ## SEO and social sharing
 
@@ -72,6 +72,14 @@ Provider documentation: https://developers.cloudflare.com/pages/how-to/web-analy
 - `assets/`: portrait, family image, campaign images, social preview, favicon
 - `robots.txt`, `sitemap.xml`: search crawler guidance
 - `_headers`: Cloudflare Pages security-related HTTP headers
+
+## Production release — Version 4.7 (November 23, 2026)
+
+- Promoted the approved UGC & paid collaborations staging design to production, including the Gogi Marami Reel + companion post, Nestlé Cerelac gifted PR post, and M2 Veggie Drink collaboration Reel.
+- Motion refinements: cinematic hero entrance, consistent one-time section reveals, subtle project hover zoom, button feedback and viewer transitions.
+- Production home and privacy pages retain indexable robots metadata; staging-only review document is not shipped to production.
+- Main branch retains the previous release in Git history for rollback. Staging branch stays available for future review.
+- Static and emulated-browser QA previously completed on staging; live release requires independent smoke testing after Cloudflare deployment.
 
 ## Maintenance checks
 
